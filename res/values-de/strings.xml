@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TactileClock</string>
+    <string name="labelApplicationDescription1">Diese App gibt die aktuelle Uhrzeit als
+        Vibrationspattern aus. Dazu muss das Display abgeschaltet sein und der Power-Button zweimal
+        kurz hintereinander betätigt werden (Interwall von 500 bis 1500 Millisekunden). Die App
+        startet automatisch nach dem Booten des Geräts.</string>
+    <string name="labelApplicationDescription2">Die Uhrzeit wird Ziffer für Ziffer
+        verarbeitet.\nVibrationspattern: kurz = 1, lang = 5\n\nBeispiele:\n- 02:11 = kurz . kurz ...
+        kurz .. kurz\n- 10:53 = kurz .. lang . lang ... lang .. kurz . kurz . kurz</string>
+    <string name="buttonTimeFormat">Zeitformat: 24 Stunden</string>
+        
+</resources>

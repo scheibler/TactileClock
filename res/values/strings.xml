@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TactileClock</string>
+    <string name="labelApplicationDescription1">This app vibrates the current time when the display
+        is locked and the power button is pressed twice in a row with a delay between 500 and 1500
+        milliseconds. It is started automatically after booting is finished.</string>
+    <string name="labelApplicationDescription2">The time is processed digit by digit.\nVibration
+        Pattern: short = 1, long = 5\n\nExamples:\n- 02:11 = short . short ... short ..
+        short\n- 10:53 = short .. long . long ... long .. short . short .  short</string>
+    <string name="buttonTimeFormat">Time format: 24 hours</string>
+
+</resources>

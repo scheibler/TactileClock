@@ -1,0 +1,9 @@
+<resources>
+
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- default font size -->
+        <item name="android:textSize">22sp</item>
+    </style>
+
+</resources>
