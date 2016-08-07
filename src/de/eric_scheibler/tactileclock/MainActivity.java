@@ -21,6 +21,24 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // set default settings
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        // service should be enabled by default
+        if (! settings.contains(TactileClockService.ENABLE_SERVICE_KEY)) {
+            Editor editor = settings.edit();
+            editor.putBoolean(
+                    TactileClockService.ENABLE_SERVICE_KEY, true);
+            editor.commit();
+        }
+        // set 24 hour format option on first application start based on user selection
+        if (! settings.contains(TactileClockService.TWENTY_FOUR_HOUR_FORMAT_KEY)) {
+            Editor editor = settings.edit();
+            editor.putBoolean(
+                    TactileClockService.TWENTY_FOUR_HOUR_FORMAT_KEY,
+                    DateFormat.is24HourFormat(this));
+            editor.commit();
+        }
+
         // ActionBar
         actionbar = getActionBar();
         actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -63,16 +81,6 @@ public class MainActivity extends Activity {
                     savedInstanceState.getInt("tab", 0));
         } else {
             actionbar.setSelectedNavigationItem(0);
-        }
-
-        // set 24 hour format option on first application start based on user selection
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-        if (! settings.contains(TactileClockService.TWENTY_FOUR_HOUR_FORMAT_KEY)) {
-            Editor editor = settings.edit();
-            editor.putBoolean(
-                    TactileClockService.TWENTY_FOUR_HOUR_FORMAT_KEY,
-                    DateFormat.is24HourFormat(this));
-            editor.commit();
         }
 
         // start service

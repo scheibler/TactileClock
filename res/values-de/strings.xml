@@ -23,12 +23,13 @@
         Minuten.</string>
 
     <string name="fragmentSettings">Einstellungen</string>
+    <string name="buttonEnableService">Service aktivieren</string>
     <string name="labelTimeFormat">Wähle zwischen 12 und 24 Stunden Zeitformat</string>
     <string name="buttonTimeFormat">Zeitformat: 24 Stunden</string>
 
     <string name="fragmentInfo">Info</string>
     <string name="labelApplicationVersion">Version: </string>
-    <string name="labelEMailAddress">Support: email@eric-scheibler.de</string>
-    <string name="labelWebsite">Webseite: http://eric-scheibler.de</string>
+    <string name="labelEMailAddress">Kontakt: email@eric-scheibler.de</string>
+    <string name="labelWebsite">Webseite: https://github.com/scheibler/TactileClock</string>
         
 </resources>

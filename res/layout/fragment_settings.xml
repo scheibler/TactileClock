@@ -8,6 +8,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
+        <Switch
+            android:id="@+id/buttonEnableService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/buttonEnableService" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,7 +26,6 @@
             android:id="@+id/buttonTimeFormat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:text="@string/buttonTimeFormat" />
 
     </LinearLayout>

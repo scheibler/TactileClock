@@ -24,6 +24,7 @@ public class TactileClockService extends Service {
     public static final long LONG_GAP = 1250;
 
     // settings
+    public static final String ENABLE_SERVICE_KEY = "enableService";
     public static final String TWENTY_FOUR_HOUR_FORMAT_KEY = "24HourFormat";
 
     // service vars

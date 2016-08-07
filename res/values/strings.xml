@@ -20,12 +20,13 @@
         hour and minute field and three dots split hours and minutes.</string>
 
     <string name="fragmentSettings">Settings</string>
+    <string name="buttonEnableService">Enable service</string>
     <string name="labelTimeFormat">Choose between 12 and 24 hour time format</string>
     <string name="buttonTimeFormat">Time format: 24 hours</string>
 
     <string name="fragmentInfo">Info</string>
     <string name="labelApplicationVersion">Version: </string>
-    <string name="labelEMailAddress">Support: email@eric-scheibler.de</string>
-    <string name="labelWebsite">Website: http://eric-scheibler.de</string>
+    <string name="labelEMailAddress">Contact: email@eric-scheibler.de</string>
+    <string name="labelWebsite">Website: https://github.com/scheibler/TactileClock</string>
 
 </resources>

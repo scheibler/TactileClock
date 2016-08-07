@@ -27,6 +27,19 @@ public class SettingsFragment extends Fragment {
 	@Override public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
+        // enable service
+        Switch buttonEnableService = (Switch) view.findViewById(R.id.buttonEnableService);
+        buttonEnableService.setChecked(
+                settings.getBoolean(TactileClockService.ENABLE_SERVICE_KEY, true));
+        buttonEnableService.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Editor editor = settings.edit();
+                editor.putBoolean(
+                        TactileClockService.ENABLE_SERVICE_KEY, isChecked);
+                editor.commit();
+            }
+        });
+
         // toggle button to switch between 12 and 24 hour format
         Switch buttonTimeFormat = (Switch) view.findViewById(R.id.buttonTimeFormat);
         buttonTimeFormat.setChecked(
