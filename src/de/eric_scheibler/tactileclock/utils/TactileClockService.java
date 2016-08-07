@@ -1,4 +1,4 @@
-package de.eric_scheibler.tactileclock;
+package de.eric_scheibler.tactileclock.utils;
 
 import java.util.Calendar;
 
@@ -22,10 +22,6 @@ public class TactileClockService extends Service {
     public static final long SHORT_GAP = 250;
     public static final long MEDIUM_GAP = 750;
     public static final long LONG_GAP = 1250;
-
-    // settings
-    public static final String ENABLE_SERVICE_KEY = "enableService";
-    public static final String TWENTY_FOUR_HOUR_FORMAT_KEY = "24HourFormat";
 
     // service vars
     private long lastScreenActivation;
@@ -66,10 +62,13 @@ public class TactileClockService extends Service {
     }
 
     private void vibrateTime() {
+        // get time format setting
+        Constants.TimeFormat timeFormat = Constants.TimeFormat.lookupByCode(
+                settings.getString(Constants.SETTINGS.TIME_FORMAT, null));
         // get current time
         Calendar c = Calendar.getInstance();
         int hours;
-        if (settings.getBoolean(TWENTY_FOUR_HOUR_FORMAT_KEY, true)) {
+        if (timeFormat == Constants.TimeFormat.TWENTYFOUR_HOURS) {
             // 24 hour format
             hours = c.get(Calendar.HOUR_OF_DAY);
         } else {

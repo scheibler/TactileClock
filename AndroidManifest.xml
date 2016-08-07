@@ -28,10 +28,10 @@
         </activity>
 
         <service
-            android:name=".TactileClockService" />
+            android:name="de.eric_scheibler.tactileclock.utils.TactileClockService" />
 
         <receiver
-            android:name=".ScreenReceiver" >
+            android:name="de.eric_scheibler.tactileclock.utils.ScreenReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

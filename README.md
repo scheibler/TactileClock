@@ -6,7 +6,7 @@ pressed twice in a row with a delay between 500 and 1500 milliseconds. It is sta
 after booting is finished. Android version >= 4.0 is supported.
 
 Basically there exist two different vibration pattern: A short vibration stands for the digit 1 and
-a long one for the digit 5. So the 2 is represented by two consecutive short vibrations, the 6 by a
+a long one for the digit 5. The 2 is represented by two consecutive short vibrations, the 6 by a
 long and a short one and so on. The 0 constitutes an exception with two long vibrations.
 
 Examples

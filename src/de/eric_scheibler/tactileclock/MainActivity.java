@@ -1,21 +1,34 @@
 package de.eric_scheibler.tactileclock;
 
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import java.lang.ref.WeakReference;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
+import de.eric_scheibler.tactileclock.ui.InfoFragment;
+import de.eric_scheibler.tactileclock.ui.SettingsFragment;
+import de.eric_scheibler.tactileclock.ui.StartFragment;
+import de.eric_scheibler.tactileclock.utils.Constants;
+import de.eric_scheibler.tactileclock.utils.TactileClockService;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
-    private ActionBar actionbar;
+    private TabLayout tabLayout;
+    private AppSectionsPagerAdapter mAppSectionsPagerAdapter;
+    private ViewPager mViewPager;
+    private int recentOpenTab;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,65 +36,63 @@ public class MainActivity extends Activity {
 
         // set default settings
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+
         // service should be enabled by default
-        if (! settings.contains(TactileClockService.ENABLE_SERVICE_KEY)) {
+        if (! settings.contains(Constants.SETTINGS.ENABLE_SERVICE)) {
             Editor editor = settings.edit();
             editor.putBoolean(
-                    TactileClockService.ENABLE_SERVICE_KEY, true);
-            editor.commit();
+                    Constants.SETTINGS.ENABLE_SERVICE, true);
+            editor.apply();
         }
-        // set 24 hour format option on first application start based on user selection
-        if (! settings.contains(TactileClockService.TWENTY_FOUR_HOUR_FORMAT_KEY)) {
+
+        // delete deprecated key from preferences
+        if (settings.contains("24HourFormat")) {
             Editor editor = settings.edit();
-            editor.putBoolean(
-                    TactileClockService.TWENTY_FOUR_HOUR_FORMAT_KEY,
-                    DateFormat.is24HourFormat(this));
-            editor.commit();
+            editor.remove("24HourFormat");
+            editor.apply();
         }
 
-        // ActionBar
-        actionbar = getActionBar();
-        actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionbar.setDisplayShowTitleEnabled(true);
-        actionbar.setDisplayShowHomeEnabled(false);
-
-        Tab startTab = actionbar.newTab()
-            .setText(getResources().getString(R.string.fragmentStart))
-            .setTabListener(
-                    new MyTabListener<StartFragment>(
-                        this,
-                        getResources().getString(R.string.fragmentStart),
-                        StartFragment.class)
-                    );
-        actionbar.addTab(startTab);
-
-        Tab settingsTab = actionbar.newTab()
-            .setText(getResources().getString(R.string.fragmentSettings))
-            .setTabListener(
-                    new MyTabListener<SettingsFragment>(
-                        this,
-                        getResources().getString(R.string.fragmentSettings),
-                        SettingsFragment.class)
-                    );
-        actionbar.addTab(settingsTab);
-
-        Tab infoTab = actionbar.newTab()
-            .setText(getResources().getString(R.string.fragmentInfo))
-            .setTabListener(
-                    new MyTabListener<InfoFragment>(
-                        this,
-                        getResources().getString(R.string.fragmentInfo),
-                        InfoFragment.class)
-                    );
-        actionbar.addTab(infoTab);
-
-        // select tab
-        if (savedInstanceState != null) {
-            actionbar.setSelectedNavigationItem(
-                    savedInstanceState.getInt("tab", 0));
-        } else {
-            actionbar.setSelectedNavigationItem(0);
+        // set time format option on first application start based on user selection
+        if (! settings.contains(Constants.SETTINGS.TIME_FORMAT)) {
+            Editor editor = settings.edit();
+            if (DateFormat.is24HourFormat(this)) {
+                editor.putString(
+                        Constants.SETTINGS.TIME_FORMAT,
+                        Constants.TimeFormat.TWENTYFOUR_HOURS.getCode());
+            } else {
+                editor.putString(
+                        Constants.SETTINGS.TIME_FORMAT,
+                        Constants.TimeFormat.TWELVE_HOURS.getCode());
+            }
+            editor.apply();
         }
+
+        // toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+
+        // Create the adapter that will return a fragment for each of the three primary sections
+        // of the app.
+        mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(this);
+
+        // Set up the ViewPager, attaching the adapter and setting up a listener for when the
+        // user swipes between sections.
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mAppSectionsPagerAdapter);
+
+        // tab layout
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(mViewPager);
+
+        // add bug free onPageChangeListener
+        mViewPager.addOnPageChangeListener(new TabLayoutOnPageChangeListenerBugFree(tabLayout));
+
+        // open the recent tab again
+        recentOpenTab = 0;
+        if (savedInstanceState != null)
+            recentOpenTab = savedInstanceState.getInt("tab", 0);
+        mViewPager.setCurrentItem(recentOpenTab);
 
         // start service
         Intent intent = new Intent(this, TactileClockService.class);
@@ -90,52 +101,86 @@ public class MainActivity extends Activity {
 
     @Override protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
+        outState.putInt("tab", recentOpenTab);
     }
 
 
-    public static class MyTabListener<T extends Fragment> implements ActionBar.TabListener {
-        private Fragment mFragment;
-        private final Activity mActivity;
-        private final String mTag;
-        private final Class<T> mClass;
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the primary
+     * sections of the app.
+     */
+    public class AppSectionsPagerAdapter extends FragmentStatePagerAdapter {
 
-        /** Constructor used each time a new tab is created.
-         * @param activity  The host Activity, used to instantiate the fragment
-         * @param tag  The identifier tag for the fragment
-         * @param clz  The fragment's Class, used to instantiate the fragment
-         */
-        public MyTabListener(Activity activity, String tag, Class<T> clz) {
-            mActivity = activity;
-            mTag = tag;
-            mClass = clz;
+        private String[] tabTitles = new String[] {
+                getResources().getString(R.string.fragmentStart),
+                getResources().getString(R.string.fragmentSettings),
+                getResources().getString(R.string.fragmentInfo)
+        };
+
+        public AppSectionsPagerAdapter(FragmentActivity activity) {
+            super(activity.getSupportFragmentManager());
         }
 
-        /* The following are each of the ActionBar.TabListener callbacks */
-        public void onTabSelected(Tab tab, FragmentTransaction ft) {
-            // Check if the fragment is already initialized
-            mFragment = (Fragment) mActivity.getFragmentManager().findFragmentByTag(mTag);
-            if (mFragment != null) {
-                // If it exists, simply attach it in order to show it
-                ft.attach(mFragment);
-            } else {
-                // If not, instantiate and add it to the activity
-                mFragment = Fragment.instantiate(mActivity, mClass.getName());
-                ft.add(android.R.id.content, mFragment, mTag);
+        @Override public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return StartFragment.newInstance();
+                case 1:
+                    return SettingsFragment.newInstance();
+                case 2:
+                    return InfoFragment.newInstance();
+                default:
+                    return null;
             }
         }
 
-        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-            if (mFragment != null) {
-                // Detach the fragment, because another one is being attached
-                ft.detach(mFragment);
-            }
+        @Override public int getCount() {
+            return tabTitles.length;
         }
 
-        public void onTabReselected(Tab tab, FragmentTransaction ft) {
-            // User selected the already selected tab. Usually do nothing.
+        @Override public CharSequence getPageTitle(int position) {
+            return tabTitles[position];
         }
-
     }
+
+    /**
+     * A custom Page Change Listener which fixes the bug described here:
+     * https://code.google.com/p/android/issues/detail?id=183123
+     **/
+    private class TabLayoutOnPageChangeListenerBugFree implements ViewPager.OnPageChangeListener {
+
+        private final WeakReference<TabLayout> mTabLayoutRef;
+        private int mPreviousScrollState;
+        private int mScrollState;
+
+        public TabLayoutOnPageChangeListenerBugFree(TabLayout tabLayout) {
+            mTabLayoutRef = new WeakReference<TabLayout>(tabLayout);
+        }
+
+        @Override public void onPageScrollStateChanged(int state) {
+            mPreviousScrollState = mScrollState;
+            mScrollState = state;
+        }
+
+        @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            final TabLayout tabLayout = mTabLayoutRef.get();
+            if (tabLayout != null) {
+                final boolean updateText = (mScrollState == ViewPager.SCROLL_STATE_DRAGGING)
+                    || (mScrollState == ViewPager.SCROLL_STATE_SETTLING
+                            && mPreviousScrollState == ViewPager.SCROLL_STATE_DRAGGING);
+                tabLayout.setScrollPosition(position, positionOffset, updateText);
+            }
+        }
+
+        @Override public void onPageSelected(int position) {
+            if (recentOpenTab != position) {
+                final TabLayout tabLayout = mTabLayoutRef.get();
+                if (tabLayout != null)
+                    tabLayout.getTabAt(position).select();
+                recentOpenTab = position;
+            }
+        }
+    }
+
 
 }

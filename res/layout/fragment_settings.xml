@@ -12,7 +12,6 @@
             android:id="@+id/buttonEnableService"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:text="@string/buttonEnableService" />
 
         <TextView
@@ -22,11 +21,26 @@
             android:focusable="true"
             android:text="@string/labelTimeFormat" />
 
-        <Switch
-            android:id="@+id/buttonTimeFormat"
+        <RadioGroup
+            android:id="@+id/radioTimeFormat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/buttonTimeFormat" />
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/button12Hours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:text="@string/button12Hours" />
+
+            <RadioButton
+                android:id="@+id/button24Hours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:text="@string/button24Hours" />
+        </RadioGroup>
 
     </LinearLayout>
 </ScrollView>

@@ -1,14 +1,21 @@
-package de.eric_scheibler.tactileclock;
+package de.eric_scheibler.tactileclock.ui;
 
-import android.app.Fragment;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import de.eric_scheibler.tactileclock.R;
 
 public class InfoFragment extends Fragment {
+
+    // newInstance constructor for creating fragment with arguments
+    public static InfoFragment newInstance() {
+        InfoFragment infoFragmentInstance = new InfoFragment();
+        return infoFragmentInstance;
+    }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_info, container, false);
