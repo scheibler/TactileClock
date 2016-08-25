@@ -6,15 +6,17 @@
     <string name="fragmentStart">Start</string>
     <string name="labelApplicationDescription1">Diese App gibt die aktuelle Uhrzeit als
         Vibrationspattern aus. Dazu muss das Display abgeschaltet sein und der Power-Button zweimal
-        kurz hintereinander betätigt werden (Intervall von 500 bis 1500 Millisekunden). Die App
-        startet automatisch nach dem Booten des Geräts.</string>
-    <string name="labelApplicationDescription2">Grundsätzlich wird dabei zwischen den folgenden
+        kurz hintereinander betätigt werden (Intervall von 50 bis 1000 Millisekunden). Sollte der
+        Doppelklick versehendlich ausgeführt werden, während das Display eingeschaltet ist, warnt
+        die App mit einer langen, durchgängigen Vibration.</string>
+    <string name="labelApplicationDescription2">Der Hintergrunddienst startet automatisch nach dem Booten des Geräts.</string>
+    <string name="labelApplicationDescription3">Grundsätzlich wird zwischen den folgenden
         zwei Vibrationspattern unterschieden: Eine kurze Vibration steht für die Ziffer 1 und eine
         lange Vibration für die Ziffer 5. Die Ziffer 2 wird durch zwei aufeinander folgende
         kurze Vibrationen, die 6 durch eine lange und eine kurze Vibration dargestellt usw.. Die 0
         bildet mit zwei langen Vibrationen eine Ausnahme.</string>
-    <string name="labelApplicationDescription3">Beispiele:\n- 01:16 =   ..     k ... k .. l . k\n- 02:51 =   .. k . k ... l ..     k\n- 10:11 = k .. l . l ... k ..     k</string>
-    <string name="labelApplicationDescription4">Erläuterung:\nDie Uhrzeit wird Ziffer für Ziffer
+    <string name="labelApplicationDescription4">Beispiele:\n- 01:16 =   ..     k ... k .. l . k\n- 02:51 =   .. k . k ... l ..     k\n- 10:11 = k .. l . l ... k ..     k</string>
+    <string name="labelApplicationDescription5">Erläuterung:\nDie Uhrzeit wird Ziffer für Ziffer
         verarbeitet. k = kurz, l = lang. Bei der Stundenangabe werden führende Nullen weggelassen.
         Um die Vibrationen unterscheiden zu können, existieren drei unterschiedlich lange Pausen,
         gekennzeichnet durch die Anzahl von Punkten in den obigen Beispielen.  Ein einzelner Punkt

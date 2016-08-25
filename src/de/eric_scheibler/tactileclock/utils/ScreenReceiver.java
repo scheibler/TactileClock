@@ -16,13 +16,9 @@ public class ScreenReceiver extends BroadcastReceiver {
                     || intent.getAction().equals(Intent.ACTION_SCREEN_ON)
                     || intent.getAction().equals(Intent.ACTION_SCREEN_OFF))
                 ) {
-            Intent i = new Intent(context, TactileClockService.class);
-            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                i.putExtra("screenOn", true);
-            } else {
-                i.putExtra("screenOn", false);
-            }
-            context.startService(i);
+            Intent tactileClockServiceIntent = new Intent(context, TactileClockService.class);
+            tactileClockServiceIntent.setAction(intent.getAction());
+            context.startService(tactileClockServiceIntent);
         }
     }
 

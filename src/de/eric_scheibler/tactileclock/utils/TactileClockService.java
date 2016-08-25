@@ -17,20 +17,27 @@ public class TactileClockService extends Service {
     // vibrations
     public static final long SHORT_VIBRATION = 100;
     public static final long LONG_VIBRATION = 500;
+    public static final long ERROR_VIBRATION = 900;
 
     // gaps
     public static final long SHORT_GAP = 250;
     public static final long MEDIUM_GAP = 750;
     public static final long LONG_GAP = 1250;
 
+    // double click parameters
+    public static final long LOWER_SUCCESS_BOUNDARY = 50;
+    public static final long UPPER_SUCCESS_BOUNDARY = 1250;
+    public static final long LOWER_ERROR_BOUNDARY = 50;
+    public static final long UPPER_ERROR_BOUNDARY = 500;
+
     // service vars
-    private long lastScreenActivation;
+    private long lastActivation;
     private SharedPreferences settings;
     private Vibrator vibrator;
 
     @Override public void onCreate() {
         super.onCreate();
-        lastScreenActivation = System.currentTimeMillis();
+        lastActivation = System.currentTimeMillis();
         settings = PreferenceManager.getDefaultSharedPreferences(this);
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -48,16 +55,24 @@ public class TactileClockService extends Service {
     }
 
     @Override public void onStart(Intent intent, int startId) {
-        if (intent != null && intent.hasExtra("screenOn")) {
-            boolean screenOn = intent.getBooleanExtra("screenOn", false);
-            if (screenOn) {
-                lastScreenActivation = System.currentTimeMillis();
-            } else {
-                long timeDifference = System.currentTimeMillis() - lastScreenActivation;
-                if (timeDifference > 500 && timeDifference < 1500) {
-                    vibrateTime();
-                }
+        if (intent != null) {
+            long timeDifference = System.currentTimeMillis() - lastActivation;
+            if (Intent.ACTION_SCREEN_ON.equals(intent.getAction())
+                    && timeDifference > LOWER_ERROR_BOUNDARY
+                    && timeDifference < UPPER_ERROR_BOUNDARY) {
+                // double click detected
+                // but screen was turned off and on instead of on and off
+                // vibrate error message
+                vibrator.vibrate(ERROR_VIBRATION);
+            } else if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())
+                    && timeDifference > LOWER_SUCCESS_BOUNDARY
+                    && timeDifference < UPPER_SUCCESS_BOUNDARY) {
+                // double click detected
+                // screen was turned on and off correctly
+                // vibrate time
+                vibrateTime();
             }
+            lastActivation = System.currentTimeMillis();
         }
     }
 
