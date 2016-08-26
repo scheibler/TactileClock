@@ -19,28 +19,65 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:focusable="true"
-            android:text="@string/labelTimeFormat" />
+            android:text="@string/labelHourFormat" />
 
         <RadioGroup
-            android:id="@+id/radioTimeFormat"
+            android:id="@+id/radioHourFormat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="vertical" >
 
             <RadioButton
                 android:id="@+id/button12Hours"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.0"
                 android:text="@string/button12Hours" />
 
             <RadioButton
                 android:id="@+id/button24Hours"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.0"
                 android:text="@string/button24Hours" />
         </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:focusable="true"
+            android:text="@string/labelTimeComponentOrder" />
+
+        <RadioGroup
+            android:id="@+id/radioTimeComponentOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RadioButton
+                android:id="@+id/buttonHoursMinutes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/buttonHoursMinutes" />
+
+            <RadioButton
+                android:id="@+id/buttonMinutesHours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/buttonMinutesHours" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:focusable="true"
+            android:text="@string/labelErrorVibration" />
+
+        <Switch
+            android:id="@+id/buttonErrorVibration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonErrorVibration" />
 
     </LinearLayout>
 </ScrollView>

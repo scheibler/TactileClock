@@ -38,32 +38,54 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 
         // service should be enabled by default
-        if (! settings.contains(Constants.SETTINGS.ENABLE_SERVICE)) {
+        if (! settings.contains(Constants.SETTINGS_KEY.ENABLE_SERVICE)) {
             Editor editor = settings.edit();
             editor.putBoolean(
-                    Constants.SETTINGS.ENABLE_SERVICE, true);
+                    Constants.SETTINGS_KEY.ENABLE_SERVICE, true);
             editor.apply();
         }
 
-        // delete deprecated key from preferences
+        // set hour format option on first application start based on user selection
+        if (! settings.contains(Constants.SETTINGS_KEY.HOUR_FORMAT)) {
+            Editor editor = settings.edit();
+            if (DateFormat.is24HourFormat(this)) {
+                editor.putString(
+                        Constants.SETTINGS_KEY.HOUR_FORMAT,
+                        Constants.HourFormat.TWENTYFOUR_HOURS.getCode());
+            } else {
+                editor.putString(
+                        Constants.SETTINGS_KEY.HOUR_FORMAT,
+                        Constants.HourFormat.TWELVE_HOURS.getCode());
+            }
+            editor.apply();
+        }
+
+        // set time component order
+        if (! settings.contains(Constants.SETTINGS_KEY.TIME_COMPONENT_ORDER)) {
+            Editor editor = settings.edit();
+            editor.putString(
+                    Constants.SETTINGS_KEY.TIME_COMPONENT_ORDER,
+                    Constants.TimeComponentOrder.HOURS_MINUTES.getCode());
+            editor.apply();
+        }
+
+        // error vibration should be enabled by default
+        if (! settings.contains(Constants.SETTINGS_KEY.ERROR_VIBRATION)) {
+            Editor editor = settings.edit();
+            editor.putBoolean(
+                    Constants.SETTINGS_KEY.ERROR_VIBRATION, true);
+            editor.apply();
+        }
+
+        // delete deprecated keys from preferences
         if (settings.contains("24HourFormat")) {
             Editor editor = settings.edit();
             editor.remove("24HourFormat");
             editor.apply();
         }
-
-        // set time format option on first application start based on user selection
-        if (! settings.contains(Constants.SETTINGS.TIME_FORMAT)) {
+        if (settings.contains("timeFormat")) {
             Editor editor = settings.edit();
-            if (DateFormat.is24HourFormat(this)) {
-                editor.putString(
-                        Constants.SETTINGS.TIME_FORMAT,
-                        Constants.TimeFormat.TWENTYFOUR_HOURS.getCode());
-            } else {
-                editor.putString(
-                        Constants.SETTINGS.TIME_FORMAT,
-                        Constants.TimeFormat.TWELVE_HOURS.getCode());
-            }
+            editor.remove("timeFormat");
             editor.apply();
         }
 

@@ -55,48 +55,72 @@ public class TactileClockService extends Service {
     }
 
     @Override public void onStart(Intent intent, int startId) {
-        if (intent != null) {
+        if (intent != null
+                && settings.getBoolean(Constants.SETTINGS_KEY.ENABLE_SERVICE, true)) {
             long timeDifference = System.currentTimeMillis() - lastActivation;
-            if (Intent.ACTION_SCREEN_ON.equals(intent.getAction())
+
+            if (settings.getBoolean(Constants.SETTINGS_KEY.ERROR_VIBRATION, true)
+                    && Intent.ACTION_SCREEN_ON.equals(intent.getAction())
                     && timeDifference > LOWER_ERROR_BOUNDARY
                     && timeDifference < UPPER_ERROR_BOUNDARY) {
                 // double click detected
                 // but screen was turned off and on instead of on and off
                 // vibrate error message
                 vibrator.vibrate(ERROR_VIBRATION);
+
             } else if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())
                     && timeDifference > LOWER_SUCCESS_BOUNDARY
                     && timeDifference < UPPER_SUCCESS_BOUNDARY) {
                 // double click detected
                 // screen was turned on and off correctly
                 // vibrate time
-                vibrateTime();
+                //
+                // get current time
+                int hours, minutes;
+                Calendar c = Calendar.getInstance();
+                Constants.HourFormat hourFormat = Constants.HourFormat.lookupByCode(
+                        settings.getString(Constants.SETTINGS_KEY.HOUR_FORMAT, null));
+                if (Constants.HourFormat.TWELVE_HOURS == hourFormat) {
+                    // 12 hour format
+                    hours = c.get(Calendar.HOUR);
+                    if (hours == 0)
+                        hours = 12;
+                } else {
+                    // 24 hour format
+                    hours = c.get(Calendar.HOUR_OF_DAY);
+                }
+                minutes = c.get(Calendar.MINUTE);
+
+                // create vibration pattern
+                // start with initial gap
+                long[] pattern = new long[]{LONG_GAP};
+                Constants.TimeComponentOrder timeComponentOrder = Constants.TimeComponentOrder.lookupByCode(
+                        settings.getString(Constants.SETTINGS_KEY.TIME_COMPONENT_ORDER, null));
+                if (Constants.TimeComponentOrder.MINUTES_HOURS == timeComponentOrder) {
+                    // minutes first
+                    pattern = concat(pattern, getVibrationPatternForMinutes(minutes));
+                    // long gap between hours and minutes
+                    pattern = concat(pattern, new long[]{LONG_GAP});
+                    // then hours
+                    pattern = concat(pattern, getVibrationPatternForHours(hours));
+                } else {
+                    // hours first
+                    pattern = concat(pattern, getVibrationPatternForHours(hours));
+                    // long gap between hours and minutes
+                    pattern = concat(pattern, new long[]{LONG_GAP});
+                    // then minutes
+                    pattern = concat(pattern, getVibrationPatternForMinutes(minutes));
+                }
+
+                // start vibration
+                vibrator.vibrate(pattern, -1);
             }
             lastActivation = System.currentTimeMillis();
         }
     }
 
-    private void vibrateTime() {
-        // get time format setting
-        Constants.TimeFormat timeFormat = Constants.TimeFormat.lookupByCode(
-                settings.getString(Constants.SETTINGS.TIME_FORMAT, null));
-        // get current time
-        Calendar c = Calendar.getInstance();
-        int hours;
-        if (timeFormat == Constants.TimeFormat.TWENTYFOUR_HOURS) {
-            // 24 hour format
-            hours = c.get(Calendar.HOUR_OF_DAY);
-        } else {
-            // 12 hour format
-            hours = c.get(Calendar.HOUR);
-            if (hours == 0)
-                hours = 12;
-        }
-        int minutes = c.get(Calendar.MINUTE);
-
-        // create vibration pattern
-        // start with initial gap
-        long[] pattern = new long[]{LONG_GAP};
+    private long[] getVibrationPatternForHours(int hours) {
+        long[] pattern = new long[]{};
         // only add first digit of hour if it is not a zero
         if (hours / 10 > 0) {
             // first number of hour
@@ -106,17 +130,18 @@ public class TactileClockService extends Service {
         }
         // second number of hour
         pattern = concat(pattern, getVibrationPatternForDigit(hours%10));
-        // long gap between hours and minutes
-        pattern = concat(pattern, new long[]{LONG_GAP});
+        return pattern;
+    }
+
+    private long[] getVibrationPatternForMinutes(int minutes) {
+        long[] pattern = new long[]{};
         // first number of minute
         pattern = concat(pattern, getVibrationPatternForDigit(minutes/10));
         // medium gap between first and second number of minutes
         pattern = concat(pattern, new long[]{MEDIUM_GAP});
         // second number of minute
         pattern = concat(pattern, getVibrationPatternForDigit(minutes%10));
-
-        // start vibration
-        vibrator.vibrate(pattern, -1);
+        return pattern;
     }
 
     private long[] getVibrationPatternForDigit(int digit) {

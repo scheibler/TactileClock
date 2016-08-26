@@ -26,9 +26,16 @@
 
     <string name="fragmentSettings">Einstellungen</string>
     <string name="buttonEnableService">Service aktivieren</string>
-    <string name="labelTimeFormat">Wähle zwischen 12 und 24 Stunden Zeitformat</string>
-    <string name="button12Hours">12 Stunden</string>
-    <string name="button24Hours">24 Stunden</string>
+    <string name="labelHourFormat">Wähle zwischen 12 und 24 Stunden Zeitformat</string>
+    <string name="button12Hours">12 Stunden Format</string>
+    <string name="button24Hours">24 Stunden Format</string>
+    <string name="labelTimeComponentOrder">Reihenfolge von Stunden und Minuten</string>
+    <string name="buttonHoursMinutes">Erst Stunden, dann Minuten</string>
+    <string name="buttonMinutesHours">Erst Minuten, dann Stunden</string>
+    <string name="labelErrorVibration">Warnvibration: Falls das Display bereits aktiviert und nach
+        dem Doppelklick somit versehendlich aus- und wieder eingeschaltet wurde, statt es kurz ein-
+        und dann wieder auszuschalten.</string>
+    <string name="buttonErrorVibration">Warnvibration</string>
 
     <string name="fragmentInfo">Info</string>
     <string name="labelApplicationVersion">Version: </string>

@@ -23,9 +23,15 @@
 
     <string name="fragmentSettings">Settings</string>
     <string name="buttonEnableService">Enable service</string>
-    <string name="labelTimeFormat">Choose between 12 and 24 hour time format</string>
-    <string name="button12Hours">12 hours</string>
-    <string name="button24Hours">24 hours</string>
+    <string name="labelHourFormat">Choose between 12 and 24 hour time format</string>
+    <string name="button12Hours">12 hour format</string>
+    <string name="button24Hours">24 hour fourmat</string>
+    <string name="labelTimeComponentOrder"></string>
+    <string name="buttonHoursMinutes">Hours first, then minutes</string>
+    <string name="buttonMinutesHours">Minutes first, then hours</string>
+    <string name="labelErrorVibration">Warning vibration: If double click of power button is performed
+        accidentally while display is active</string>
+    <string name="buttonErrorVibration">Warning vibration</string>
 
     <string name="fragmentInfo">Info</string>
     <string name="labelApplicationVersion">Version: </string>
