@@ -1,0 +1,59 @@
+TactileClock
+============
+
+Vibriert die Uhrzeit nach zweimaliger Betätigung des Power Buttons
+
+-----
+
+Diese App gibt die aktuelle Uhrzeit als Vibrationspattern aus. Dazu muss das Display abgeschaltet
+sein und der Power-Button zweimal kurz hintereinander betätigt werden (Intervall von 50 bis 1500
+Millisekunden). Sollte der Doppelklick versehentlich ausgeführt werden, während das Display
+eingeschaltet ist, warnt die App mit einer langen, durchgängigen Vibration. Der Hintergrunddienst
+startet automatisch nach dem Booten des Geräts.
+
+Grundsätzlich wird dabei zwischen den folgenden zwei Vibrationspattern unterschieden: Eine kurze
+Vibration steht für die Ziffer 1 und eine lange Vibration für die Ziffer 5. Die Ziffer 2 wird somit
+durch zwei aufeinander folgende kurze Vibrationen, die 6 durch eine lange und eine kurze Vibration
+dargestellt usw.. Die 0 bildet mit zwei langen Vibrationen eine Ausnahme.
+
+Beispiele:
+- 01:16 =   ..     k ... k .. l . k
+- 02:51 =   .. k . k ... l ..     k
+- 10:11 = k .. l . l ... k ..     k
+
+Erläuterung:
+Die Uhrzeit wird Ziffer für Ziffer verarbeitet. k = kurz, l = lang. Bei der Stundenangabe werden
+führende Nullen weggelassen. Um die Vibrationen unterscheiden zu können, existieren drei
+unterschiedlich lange Pausen, gekennzeichnet durch die Anzahl von Punkten in den obigen Beispielen.
+Ein einzelner Punkt steht für die Pause zwischen zwei Vibrationen, zwei Punkte symbolisieren die
+Trennung zwischen den Ziffern im Stunden- und Minutenfeld und drei Punkte trennen die Stunden von
+den Minuten.
+
+
+----------
+
+Vibrates the current time after double press of device power button
+
+-----
+
+This Android app vibrates the current time when the display is locked and the power button is
+pressed twice in a row with a delay between 50 and 1500 milliseconds. If the double click is
+performed accidentally while the display is still active, the app warns with a long, persistent
+vibration. The background process is started automatically after booting is finished.
+
+Basically there exist two different vibration pattern: A short vibration stands for the digit 1 and
+a long one for the digit 5. So the 2 is represented by two consecutive short vibrations, the 6 by a
+long and a short one and so on. The 0 constitutes an exception with two long vibrations.
+
+Examples:
+- 01:16 =   ..     s ... s .. l . s
+- 02:51 =   .. s . s ... l ..     s
+- 10:11 = s .. l . l ... s ..     s
+
+Explanation:
+The time is processed digit by digit. s = short, l = long. A leading zero at the hour field is
+omitted. To simplify the recognition of the vibration pattern, there exist three kind of gabs with
+different durations, marked by the number of dots in the examples above. A single dot stands for the
+pause between two vibrations, two dots symbolize the separation of two digits within the hour and
+minute field and three dots split hours and minutes.
+

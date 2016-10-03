@@ -1,12 +1,18 @@
-v1.0.0: 2016.05.03:
+v1.0.0: Released at 2016-05-03
 - initial release.
 
-v1.0.1: 2016.05.06:
+v1.0.1: Released at 2016-05-06
 - added tabs
 - improved application description
 
-v1.0.2: 2016.08.07:
+v1.0.2: Released at 2016-08-07
 - Added switch to enable and disable the service
 - Material design
 - New project website at the info tab
+
+v1.1.0: Released at 2016-10-03
+- New options:
+    - Time component order: choose between hours,minutes and minutes,hours
+    - Warn vibration, if display was turned off,on instead of on,off
+- Time interval changes (upper boundary pushed from 1000 to 1500 ms)
 

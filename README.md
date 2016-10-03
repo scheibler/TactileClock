@@ -2,7 +2,7 @@ TactileClock
 ============
 
 This Android app vibrates the current time when the display is locked and the power button is
-pressed twice in a row with a delay between 50 and 1000 milliseconds. If the double click is
+pressed twice in a row with a delay between 50 and 1500 milliseconds. If the double click is
 performed accidentally while the display is still active, the app warns with a long, persistent
 vibration.
 

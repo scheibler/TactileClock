@@ -26,7 +26,7 @@ public class TactileClockService extends Service {
 
     // double click parameters
     public static final long LOWER_SUCCESS_BOUNDARY = 50;
-    public static final long UPPER_SUCCESS_BOUNDARY = 1250;
+    public static final long UPPER_SUCCESS_BOUNDARY = 1500;
     public static final long LOWER_ERROR_BOUNDARY = 50;
     public static final long UPPER_ERROR_BOUNDARY = 500;
 

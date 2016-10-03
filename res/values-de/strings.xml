@@ -6,8 +6,8 @@
     <string name="fragmentStart">Start</string>
     <string name="labelApplicationDescription1">Diese App gibt die aktuelle Uhrzeit als
         Vibrationspattern aus. Dazu muss das Display abgeschaltet sein und der Power-Button zweimal
-        kurz hintereinander betätigt werden (Intervall von 50 bis 1000 Millisekunden). Sollte der
-        Doppelklick versehendlich ausgeführt werden, während das Display eingeschaltet ist, warnt
+        kurz hintereinander betätigt werden (Intervall von 50 bis 1500 Millisekunden). Sollte der
+        Doppelklick versehentlich ausgeführt werden, während das Display eingeschaltet ist, warnt
         die App mit einer langen, durchgängigen Vibration.</string>
     <string name="labelApplicationDescription2">Der Hintergrunddienst startet automatisch nach dem Booten des Geräts.</string>
     <string name="labelApplicationDescription3">Grundsätzlich wird zwischen den folgenden
