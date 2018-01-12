@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:text="@string/labelWatchFragmentHeader" />
+
+        <Button
+            android:id="@+id/buttonStartWatch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="36sp"
+            android:text="@string/buttonStartWatch" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:focusable="true"
+            android:text="@string/labelWatchOptions" />
+
+        <Button
+            android:id="@+id/buttonWatchInterval"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonWatchInterval" />
+
+        <Button
+            android:id="@+id/buttonWatchAutoSwitchOff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonWatchAutoSwitchOff" />
+
+        <Switch
+            android:id="@+id/buttonWatchOnlyVibrateMinutes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonWatchOnlyVibrateMinutes" />
+
+        <Switch
+            android:id="@+id/buttonWatchStartAtNextFullHour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonWatchStartAtNextFullHour" />
+
+    </LinearLayout>
+</ScrollView>

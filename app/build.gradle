@@ -1,0 +1,71 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-rocket-launcher'
+
+// get signing properties
+Properties keystoreProperties = new Properties()
+if (project.rootProject.file('local.properties').exists()) {
+    Properties localProperties = new Properties()
+    localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+    if (localProperties.getProperty('signingPropertiesFile') != null
+            && new File(localProperties.getProperty('signingPropertiesFile')).exists()) {
+        keystoreProperties.load(
+                new FileInputStream(file(localProperties.getProperty('signingPropertiesFile'))))
+    }
+}
+if (keystoreProperties.isEmpty()) {
+    keystoreProperties.setProperty('storeFile', 'empty.keystore')
+    keystoreProperties.setProperty('storePassword', 'storePassword')
+    keystoreProperties.setProperty('keyAlias', 'keyAlias')
+    keystoreProperties.setProperty('keyPassword', 'keyPassword')
+}
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.2"
+
+    defaultConfig {
+        applicationId "de.eric_scheibler.tactileclock"
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 5
+        versionName '2.0.0'
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+    lintOptions {
+        baseline file("lint-baseline.xml")
+    }
+}
+
+dependencies {
+    compile 'com.android.support:design:27.0.2'
+    compile 'com.google.guava:guava:20.0'
+}
+
+// REQUIRED: Google's new Maven repo is required for the latest
+// support library that is compatible with Android 8.0
+repositories {
+    // gradle version >= 4.1
+    // google()
+    //
+    // If you're using a version of Gradle lower than 4.1, you must instead use:
+    maven {
+        url 'https://maven.google.com'
+    }
+}

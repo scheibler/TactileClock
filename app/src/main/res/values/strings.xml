@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+         abstract activity and app wide menu
+    -->
+
+    <!-- abstract activity menu -->
+    <string name="menuItemTutorial">Tutorial</string>
+    <string name="menuItemSettings">Settings</string>
+    <string name="menuItemInfo">Info</string>
+
+
+    <!--
+         main activity and fragments
+    -->
+
+    <!-- main activity -->
+    <string name="app_name">TactileClock</string>
+
+    <!-- power button service fragment -->
+    <string name="fragmentPowerButton">Shortcut</string>
+    <string name="labelPowerButtonFragmentHeader">Configure the power button shortcut.\nTo vibrate
+        the current time press the power button twice in quick succession while the display is
+        locked.</string>
+    <string name="buttonEnableService">Enable shortcut</string>
+    <string name="labelPowerButtonClickInterval">Click interval:</string>
+    <string name="buttonPowerButtonLowerSuccessBoundary">From</string>
+    <string name="buttonPowerButtonUpperSuccessBoundary">To</string>
+    <string name="labelErrorVibration">Warning vibration: If double click of power button is performed
+        accidentally while display is active</string>
+    <string name="buttonErrorVibration">Warning vibration</string>
+
+    <!-- watch fragment -->
+    <string name="fragmentWatch">Watch</string>
+    <string name="labelWatchFragmentHeader">Continuous vibration of the current time</string>
+    <string name="buttonStartWatch">Start watch</string>
+    <string name="buttonStopWatch">Stop watch</string>
+    <string name="messageWatchStarted">Watch started</string>
+    <string name="messageWatchStopped">Watch stopped</string>
+    <string name="labelWatchOptions">Options:</string>
+    <string name="buttonWatchInterval">Vibration interval</string>
+    <string name="buttonWatchAutoSwitchOff">Autom. switch-off</string>
+    <string name="buttonWatchOnlyVibrateMinutes">Vibrate minutes only</string>
+    <string name="buttonWatchStartAtNextFullHour">Start at next full hour</string>
+
+    <!-- select integer dialog -->
+    <string name="selectWatchIntervalDialogTitle">Vibration interval in minutes:</string>
+    <string name="selectPowerButtonLowerSuccessBoundaryDialogTitle">Lower click interval in ms:</string>
+    <string name="selectPowerButtonUpperSuccessBoundaryDialogTitle">Upper click interval in ms:</string>
+    <string name="messageEnteredInvalidValue">The entered value must be > 0</string>
+
+    <!-- select time dialog -->
+    <string name="selectTimeDialogTitle">Select autom. switch-off time:</string>
+    <string name="buttonWatchAutoSwitchOffEnabled">Autom. switch-off</string>
+    <string name="buttonAddOneMinute">+1 Min</string>
+    <string name="buttonAddOneMinuteCD">Add one minute</string>
+    <string name="buttonAddTenMinutes">+10 Min</string>
+    <string name="buttonAddTenMinutesCD">Add ten minutes</string>
+    <string name="buttonAddOneHour">+1 Hour</string>
+    <string name="buttonAddOneHourCD">Add one hour</string>
+    <string name="messageInvalidHourValue">Hour must be between 0 and 23.</string>
+    <string name="messageInvalidMinuteValue">Minute must be between 0 and 59.</string>
+
+    <!--
+         other activities and dialogs
+    -->
+
+    <!-- HelpDialog -->
+    <string name="helpDialogTitle">Tutorial</string>
+    <string name="labelApplicationDescription1">This Android app vibrates the current time when the
+        display is locked and the power button is pressed twice in a row with a delay between 50 and
+        1500 milliseconds. If the double click is performed accidentally while the display is still
+        active, the app warns with a long, persistent vibration.</string>
+    <string name="labelApplicationDescription2">The background process is started automatically after booting is finished.  </string>
+    <string name="labelApplicationDescription3">Basically there exist two different vibration
+        patterns: A short vibration stands for the digit 1 and a long one for the digit 5. The 2
+        is represented by two consecutive short vibrations, the 6 by a long and a short one and so
+        on. The 0 constitutes an exception with two long vibrations.</string>
+    <string name="labelApplicationDescription4">Examples:\n- 01:16 =   ..     s ... s .. l . s\n- 02:51 =   .. s . s ... l ..     s\n- 10:11 = s .. l . l ... s ..     s</string>
+    <string name="labelApplicationDescription5">Explanation:\nThe time is processed digit by digit.
+        s = short, l = long. A leading zero at the hour field is omitted. To simplify the
+        recognition of the vibration pattern, there exist three kind of gabs with different
+        durations, marked by the number of dots in the examples above. A single dot stands for the
+        pause between two vibrations, two dots symbolize the separation of two digits within the
+        hour and minute field and three dots split hours and minutes.</string>
+
+    <!-- settings activity -->
+    <string name="settingsActivityTitle">Settings</string>
+    <string name="labelHourFormat">Choose between 12 and 24 hour time format</string>
+    <string name="button12Hours">12 hour format</string>
+    <string name="button24Hours">24 hour fourmat</string>
+    <string name="labelTimeComponentOrder"></string>
+    <string name="buttonHoursMinutes">Hours first, then minutes</string>
+    <string name="buttonMinutesHours">Minutes first, then hours</string>
+
+    <!-- info activity -->
+    <string name="infoActivityTitle">Info</string>
+    <string name="labelApplicationVersion">Version: </string>
+    <string name="labelEMailAddress">Contact: email@eric-scheibler.de</string>
+    <string name="labelWebsite">Website: https://github.com/scheibler/TactileClock</string>
+
+    <!-- service -->
+    <string name="serviceNotification">Shortcut: %1$s, Watch: %2$s</string>
+    <string name="serviceNotificationWatchEnabled">Shortcut: %1$s, Watch: %2$s (%3$s)</string>
+
+    <!-- standard messages, which are used in more than one component -->
+    <string name="dialogOK">OK</string>
+    <string name="dialogCancel">Cancel</string>
+    <string name="dialogDefault">Default</string>
+    <string name="dialogEnabled">On</string>
+    <string name="dialogDisabled">Off</string>
+    <string name="dialogNow">Now</string>
+
+    <!--
+         plurals
+    -->
+
+    <plurals
+        name="milliseconds">
+        <item quantity="one">1 ms</item>
+        <item quantity="other">%d ms</item>
+    </plurals>
+
+    <plurals
+        name="minutes">
+        <item quantity="one">1 Minute</item>
+        <item quantity="other">%d Minutes</item>
+    </plurals>
+
+</resources>

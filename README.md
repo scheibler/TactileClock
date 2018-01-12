@@ -6,8 +6,8 @@ pressed twice in a row with a delay between 50 and 1500 milliseconds. If the dou
 performed accidentally while the display is still active, the app warns with a long, persistent
 vibration.
 
-The background process is started automatically after booting is finished. Android version >= 4.0 is
-supported.
+The background process is started automatically after booting is finished. Android version >= 4.1
+(API 16) is supported.
 
 Basically there exist two different vibration pattern: A short vibration stands for the digit 1 and
 a long one for the digit 5. The 2 is represented by two consecutive short vibrations, the 6 by a

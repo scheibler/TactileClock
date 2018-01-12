@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Switch
+            android:id="@+id/buttonWatchAutoSwitchOffEnabled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonWatchAutoSwitchOffEnabled" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/editHours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:selectAllOnFocus="true"
+                android:inputType="number"
+                android:imeOptions="actionNext" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:focusable="false"
+                android:text=":" />
+
+            <EditText
+                android:id="@+id/editMinutes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:selectAllOnFocus="true"
+                android:inputType="number"
+                android:imeOptions="actionDone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/buttonAddOneMinute"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:contentDescription="@string/buttonAddOneMinuteCD"
+                android:text="@string/buttonAddOneMinute" />
+
+            <Button
+                android:id="@+id/buttonAddTenMinutes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:contentDescription="@string/buttonAddTenMinutesCD"
+                android:text="@string/buttonAddTenMinutes" />
+
+            <Button
+                android:id="@+id/buttonAddOneHour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:contentDescription="@string/buttonAddOneHourCD"
+                android:text="@string/buttonAddOneHour" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

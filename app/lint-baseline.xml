@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="4" by="lint 2.3.1">
+
+    <issue
+        id="AllowBackup"
+        message="On SDK version 23 and up, your app data will be automatically backed up and restored on app install. Consider adding the attribute `android:fullBackupContent` to specify an `@xml` resource which configures which files to backup. More info: https://developer.android.com/training/backup/autosyncapi.html"
+        errorLine1="    &lt;application"
+        errorLine2="    ^">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="9"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="StaticFieldLeak"
+        message="Do not place Android context classes in static fields (static reference to `SettingsManager` which has field `context` pointing to `Context`); this is a memory leak (and also breaks Instant Run)"
+        errorLine1=" // class variables"
+        errorLine2=" ^">
+        <location
+            file="src/main/java/de/eric_scheibler/tactileclock/utils/SettingsManager.java"
+            line="45"
+            column="2"/>
+    </issue>
+
+    <issue
+        id="StaticFieldLeak"
+        message="Do not place Android context classes in static fields (static reference to `TTSWrapper` which has field `mContext` pointing to `Context`); this is a memory leak (and also breaks Instant Run)"
+        errorLine1="    private static TTSWrapper ttsWrapperInstance;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/de/eric_scheibler/tactileclock/utils/TTSWrapper.java"
+            line="23"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.heading` appears to be unused"
+        errorLine1="    &lt;color name=&quot;heading&quot;>#d70000&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="4"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="    &lt;string name=&quot;labelApplicationDescription4&quot;>Examples:\n- 01:16 =   ..     s ... s .. l . s\n- 02:51 =   .. s . s ... l ..     s\n- 10:11 = s .. l . l ... s ..     s&lt;/string>"
+        errorLine2="                                                ^">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="79"
+            column="49"/>
+    </issue>
+
+    <issue
+        id="TypographyEllipsis"
+        message="Replace &quot;...&quot; with ellipsis character (…, &amp;#8230;) ?"
+        errorLine1="    &lt;string name=&quot;labelApplicationDescription4&quot;>Beispiele:\n- 01:16 =   ..     k ... k .. l . k\n- 02:51 =   .. k . k ... l ..     k\n- 10:11 = k .. l . l ... k ..     k&lt;/string>"
+        errorLine2="                                                ^">
+        <location
+            file="src/main/res/values-de/strings.xml"
+            line="84"
+            column="49"/>
+    </issue>
+
+    <issue
+        id="IconColors"
+        message="Notification icons must be entirely white">
+        <location
+            file="src/main/res/drawable-hdpi/ic_launcher.png"/>
+        <location
+            file="src/main/java/de/eric_scheibler/tactileclock/utils/TactileClockService.java"
+            line="301"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="IconColors"
+        message="Notification icons must be entirely white">
+        <location
+            file="src/main/res/drawable-mdpi/ic_launcher.png"/>
+        <location
+            file="src/main/java/de/eric_scheibler/tactileclock/utils/TactileClockService.java"
+            line="301"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="IconColors"
+        message="Notification icons must be entirely white">
+        <location
+            file="src/main/res/drawable-xhdpi/ic_launcher.png"/>
+        <location
+            file="src/main/java/de/eric_scheibler/tactileclock/utils/TactileClockService.java"
+            line="301"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="IconColors"
+        message="Notification icons must be entirely white">
+        <location
+            file="src/main/res/drawable-xxhdpi/ic_launcher.png"/>
+        <location
+            file="src/main/java/de/eric_scheibler/tactileclock/utils/TactileClockService.java"
+            line="301"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="IconColors"
+        message="Notification icons must be entirely white">
+        <location
+            file="src/main/res/drawable-xxxhdpi/ic_launcher.png"/>
+        <location
+            file="src/main/java/de/eric_scheibler/tactileclock/utils/TactileClockService.java"
+            line="301"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="IconLauncherShape"
+        message="Launcher icons should not fill every pixel of their square region; see the design guide for details">
+        <location
+            file="src/main/res/drawable-hdpi/ic_launcher.png"/>
+    </issue>
+
+    <issue
+        id="IconLauncherShape"
+        message="Launcher icons should not fill every pixel of their square region; see the design guide for details">
+        <location
+            file="src/main/res/drawable-mdpi/ic_launcher.png"/>
+    </issue>
+
+    <issue
+        id="IconLauncherShape"
+        message="Launcher icons should not fill every pixel of their square region; see the design guide for details">
+        <location
+            file="src/main/res/drawable-xhdpi/ic_launcher.png"/>
+    </issue>
+
+    <issue
+        id="IconLauncherShape"
+        message="Launcher icons should not fill every pixel of their square region; see the design guide for details">
+        <location
+            file="src/main/res/drawable-xxhdpi/ic_launcher.png"/>
+    </issue>
+
+    <issue
+        id="IconLauncherShape"
+        message="Launcher icons should not fill every pixel of their square region; see the design guide for details">
+        <location
+            file="src/main/res/drawable-xxxhdpi/ic_launcher.png"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
+        errorLine1="            &lt;Button"
+        errorLine2="            ^">
+        <location
+            file="src/main/res/layout/dialog_select_time.xml"
+            line="54"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
+        errorLine1="            &lt;Button"
+        errorLine2="            ^">
+        <location
+            file="src/main/res/layout/dialog_select_time.xml"
+            line="62"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
+        errorLine1="            &lt;Button"
+        errorLine2="            ^">
+        <location
+            file="src/main/res/layout/dialog_select_time.xml"
+            line="70"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
+        errorLine1="            &lt;Button"
+        errorLine2="            ^">
+        <location
+            file="src/main/res/layout/fragment_power_button.xml"
+            line="35"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
+        errorLine1="            &lt;Button"
+        errorLine2="            ^">
+        <location
+            file="src/main/res/layout/fragment_power_button.xml"
+            line="42"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="GoogleAppIndexingWarning"
+        message="App is not indexable by Google Search; consider adding at least one Activity with an ACTION-VIEW intent filter. See issue explanation for more details."
+        errorLine1="    &lt;application"
+        errorLine2="    ^">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="9"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="[I18N] Hardcoded string &quot;:&quot;, should use `@string` resource"
+        errorLine1="                android:text=&quot;:&quot; />"
+        errorLine2="                ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/dialog_select_time.xml"
+            line="37"
+            column="17"/>
+    </issue>
+
+</issues>
