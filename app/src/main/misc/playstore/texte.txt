@@ -1,5 +1,5 @@
-TactileClock
-============
+Tactile Clock
+=============
 
 Vibriert die Uhrzeit nach zweimaliger Betätigung des Power Buttons
 

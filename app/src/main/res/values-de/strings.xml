@@ -16,7 +16,7 @@
     -->
 
     <!-- main activity -->
-    <string name="app_name">TactileClock</string>
+    <string name="app_name">Tactile Clock</string>
 
     <!-- power button service fragment -->
     <string name="fragmentPowerButton">Shortcut</string>

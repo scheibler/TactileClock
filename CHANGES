@@ -27,3 +27,6 @@ v2.0.0: Released at 2018-01-08
 - Option to select the power button shortcut click interval
 - Fixed several small bugs
 
+v2.0.1: Released at 2018-01-12
+- Additional space character in application title
+
