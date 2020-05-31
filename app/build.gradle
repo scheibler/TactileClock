@@ -20,15 +20,23 @@ if (keystoreProperties.isEmpty()) {
 }
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.2"
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
 
     defaultConfig {
         applicationId "de.eric_scheibler.tactileclock"
         minSdkVersion 16
-        targetSdkVersion 27
-        versionCode 6
-        versionName '2.0.1'
+        targetSdkVersion 29
+        resConfigs "en", "de"
+        versionCode 7
+        versionName '2.0.2'
+        // set .apk name
+        setProperty("archivesBaseName", "${archivesBaseName}-$versionName")
     }
 
     signingConfigs {
@@ -44,28 +52,18 @@ android {
         release {
             signingConfig signingConfigs.release
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
 
     lintOptions {
-        baseline file("lint-baseline.xml")
+        disable "StaticFieldLeak", "InflateParams", "GoogleAppIndexingWarning",
+                "ButtonStyle", "UseSparseArrays", "UseCompoundDrawables",
+                "DefaultLocale", "AllowBackup", "IconLauncherShape", "Autofill", "GradleCompatible"
     }
 }
 
 dependencies {
-    compile 'com.android.support:design:27.0.2'
-    compile 'com.google.guava:guava:20.0'
-}
-
-// REQUIRED: Google's new Maven repo is required for the latest
-// support library that is compatible with Android 8.0
-repositories {
-    // gradle version >= 4.1
-    // google()
-    //
-    // If you're using a version of Gradle lower than 4.1, you must instead use:
-    maven {
-        url 'https://maven.google.com'
-    }
+    //implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.google.guava:guava:28.2-android'
 }

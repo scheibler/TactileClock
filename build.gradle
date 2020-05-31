@@ -2,16 +2,22 @@
 
 buildscript {
     repositories {
+        google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.1'
-        classpath 'com.cesarferreira:android-rocket-launcher:0.2.3'
+        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.cesarferreira:android-rocket-launcher:0.9.1'
     }
 }
 
 allprojects {
     repositories {
+        google()
         jcenter()
     }
+    // enable compiler warnings
+    //tasks.withType(JavaCompile) {
+    //    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    //}
 }
