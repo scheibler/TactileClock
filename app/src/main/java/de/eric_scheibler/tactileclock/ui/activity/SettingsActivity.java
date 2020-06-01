@@ -1,12 +1,7 @@
 package de.eric_scheibler.tactileclock.ui.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
 
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -65,14 +60,6 @@ public class SettingsActivity extends AbstractActivity {
                 }
             }
         });
-    }
-
-    @Override public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        menu.findItem(R.id.menuItemTutorial).setVisible(false);
-        menu.findItem(R.id.menuItemSettings).setVisible(false);
-        menu.findItem(R.id.menuItemInfo).setVisible(false);
-        return true;
     }
 
 	@Override public void onResume() {

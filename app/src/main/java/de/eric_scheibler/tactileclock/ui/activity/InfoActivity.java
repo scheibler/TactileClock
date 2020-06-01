@@ -1,12 +1,10 @@
 package de.eric_scheibler.tactileclock.ui.activity;
 
-import android.content.Context;
 
 import android.os.Bundle;
 
 import android.support.v7.widget.Toolbar;
 
-import android.view.Menu;
 
 import android.widget.TextView;
 
@@ -30,14 +28,6 @@ public class InfoActivity extends AbstractActivity {
                 getResources().getString(R.string.infoActivityTitle));
 
         labelApplicationVersion = (TextView) findViewById(R.id.labelApplicationVersion);
-    }
-
-    @Override public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        menu.findItem(R.id.menuItemTutorial).setVisible(false);
-        menu.findItem(R.id.menuItemSettings).setVisible(false);
-        menu.findItem(R.id.menuItemInfo).setVisible(false);
-        return true;
     }
 
 	@Override public void onResume() {

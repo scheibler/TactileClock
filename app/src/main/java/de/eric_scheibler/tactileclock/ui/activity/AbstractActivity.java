@@ -5,11 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 
-import de.eric_scheibler.tactileclock.R;
 import de.eric_scheibler.tactileclock.ui.dialog.HelpDialog;
 import de.eric_scheibler.tactileclock.utils.SettingsManager;
 import android.support.v4.content.LocalBroadcastManager;
@@ -26,41 +22,6 @@ public abstract class AbstractActivity extends AppCompatActivity {
 		settingsManagerInstance = SettingsManager.getInstance(this);
     }
 
-
-    /**
-     * toolbar
-     */
-
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_activity, menu);
-        return true;
-    }
-
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menuItemTutorial:
-                HelpDialog.newInstance().show(
-                        getSupportFragmentManager(), "HelpDialog");
-                break;
-            case R.id.menuItemSettings:
-                Intent intentStartSettingsActivity = new Intent(AbstractActivity.this, SettingsActivity.class);
-                startActivity(intentStartSettingsActivity);
-                break;
-            case R.id.menuItemInfo:
-                Intent intentStartInfoActivity = new Intent(AbstractActivity.this, InfoActivity.class);
-                startActivity(intentStartInfoActivity);
-                break;
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    /**
-     * pause and resume
-     */
 
     @Override public void onPause() {
         super.onPause();
@@ -83,8 +44,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override public void onReceive(Context context, Intent intent) {
             if (Constants.CustomAction.RELOAD_UI.equals(intent.getAction())) {
-                onPause();
-                onResume();
+                AbstractActivity.this.recreate();
             }
         }
     };

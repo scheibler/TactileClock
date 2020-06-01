@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- default: black-->
+    <color name="text">#000000</color>
+
+    <!-- divider: black-->
+    <color name="divider">#000000</color>
+
+    <!-- headings: red -->
+    <color name="heading">#d70000</color>
+
+    <!-- links: blue-->
+    <color name="link">#0066d6</color>
+
+</resources>

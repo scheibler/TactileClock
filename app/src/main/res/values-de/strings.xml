@@ -2,21 +2,18 @@
 <resources>
 
     <!--
-         abstract activity and app wide menu
-    -->
-
-    <!-- abstract activity menu -->
-    <string name="menuItemTutorial">Tutorial</string>
-    <string name="menuItemSettings">Einstellungen</string>
-    <string name="menuItemInfo">Info</string>
-
-
-    <!--
          main activity and fragments
     -->
 
     <!-- main activity -->
     <string name="app_name">Tactile Clock</string>
+    <!-- toolbar -->
+    <string name="openNavigationDrawer">Menü öffnen</string>
+    <string name="closeNavigationDrawer">Menü schließen</string>
+    <string name="menuItemSettings">Einstellungen</string>
+    <string name="menuItemInfo">Info</string>
+    <string name="menuItemTutorial">Tutorial</string>
+
 
     <!-- power button service fragment -->
     <string name="fragmentPowerButton">Shortcut</string>

@@ -1,25 +1,19 @@
 package de.eric_scheibler.tactileclock.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import de.eric_scheibler.tactileclock.R;
-import de.eric_scheibler.tactileclock.utils.Constants;
-import de.eric_scheibler.tactileclock.listener.FragmentCommunicator;
 import de.eric_scheibler.tactileclock.utils.SettingsManager;
-import de.eric_scheibler.tactileclock.ui.activity.MainActivity;
 import android.content.Context;
-import android.app.Activity;
 import android.widget.Button;
 import de.eric_scheibler.tactileclock.listener.SelectIntegerDialogCloseListener;
 import de.eric_scheibler.tactileclock.ui.dialog.SelectIntegerDialog;
 
-public class PowerButtonFragment extends Fragment
-    implements FragmentCommunicator, SelectIntegerDialogCloseListener {
+public class PowerButtonFragment extends AbstractFragment implements SelectIntegerDialogCloseListener {
 
 	// Store instance variables
 	private SettingsManager settingsManagerInstance;
@@ -36,13 +30,6 @@ public class PowerButtonFragment extends Fragment
 
 	@Override public void onAttach(Context context) {
 		super.onAttach(context);
-		Activity activity;
-		if (context instanceof Activity) {
-			activity = (Activity) context;
-			// instanciate FragmentCommunicator interface to get data from MainActivity
-			((MainActivity) activity).powerButtonFragmentCommunicator = this;
-		}
-        // settings manager
 		settingsManagerInstance = SettingsManager.getInstance(context);
 	}
 
@@ -57,7 +44,9 @@ public class PowerButtonFragment extends Fragment
         buttonEnableService = (Switch) view.findViewById(R.id.buttonEnableService);
         buttonEnableService.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                settingsManagerInstance.setPowerButtonServiceEnabled(isChecked);
+                if (isChecked != settingsManagerInstance.getPowerButtonServiceEnabled()) {
+                    settingsManagerInstance.setPowerButtonServiceEnabled(isChecked);
+                }
             }
         });
 
@@ -89,12 +78,35 @@ public class PowerButtonFragment extends Fragment
         buttonErrorVibration = (Switch) view.findViewById(R.id.buttonErrorVibration);
         buttonErrorVibration.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                settingsManagerInstance.setPowerButtonErrorVibration(isChecked);
+                if (isChecked != settingsManagerInstance.getPowerButtonErrorVibration()) {
+                    settingsManagerInstance.setPowerButtonErrorVibration(isChecked);
+                }
             }
         });
     }
 
-    @Override public void onFragmentEnabled() {
+	@Override public void fragmentInvisible() {
+    }
+
+    @Override public void fragmentVisible() {
+        updateUI();
+    }
+
+    @Override public void integerSelected(int token, int selectedInteger) {
+        switch (token) {
+            case SelectIntegerDialog.TOKEN_POWER_BUTTON_LOWER_SUCCESS_BOUNDARY:
+                settingsManagerInstance.setPowerButtonLowerSuccessBoundary(selectedInteger);
+                break;
+            case SelectIntegerDialog.TOKEN_POWER_BUTTON_UPPER_SUCCESS_BOUNDARY:
+                settingsManagerInstance.setPowerButtonUpperSuccessBoundary(selectedInteger);
+                break;
+            default:
+                break;
+        }
+        updateUI();
+    }
+
+    private void updateUI() {
         buttonEnableService.setChecked(
                 settingsManagerInstance.getPowerButtonServiceEnabled());
         buttonPowerButtonLowerSuccessBoundary.setText(
@@ -117,24 +129,6 @@ public class PowerButtonFragment extends Fragment
                 );
         buttonErrorVibration.setChecked(
                 settingsManagerInstance.getPowerButtonErrorVibration());
-    }
-
-	@Override public void onFragmentDisabled() {
-    }
-
-    @Override public void integerSelected(int token, int selectedInteger) {
-        onFragmentDisabled();
-        switch (token) {
-            case SelectIntegerDialog.TOKEN_POWER_BUTTON_LOWER_SUCCESS_BOUNDARY:
-                settingsManagerInstance.setPowerButtonLowerSuccessBoundary(selectedInteger);
-                break;
-            case SelectIntegerDialog.TOKEN_POWER_BUTTON_UPPER_SUCCESS_BOUNDARY:
-                settingsManagerInstance.setPowerButtonUpperSuccessBoundary(selectedInteger);
-                break;
-            default:
-                break;
-        }
-        onFragmentEnabled();
     }
 
 }

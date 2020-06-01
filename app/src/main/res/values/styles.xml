@@ -2,8 +2,17 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- default font size -->
-        <item name="android:textSize">22sp</item>
+        <!-- default font size and color -->
+        <item name="android:textSize">@dimen/textSize</item>
+        <item name="android:textColor">@color/text</item>
+        <!-- link color -->
+        <item name="android:textColorLink">@color/link</item>
+        <!-- style to prevent all-caps on buttons -->
+        <item name="buttonStyle">@style/NoAllCapsButton</item>
+    </style>
+
+    <style name="NoAllCapsButton" parent="Widget.AppCompat.Button">
+        <item name="android:textAllCaps">false</item>
     </style>
 
 </resources>
