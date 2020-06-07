@@ -1,26 +1,31 @@
 package de.eric_scheibler.tactileclock.ui.activity;
 
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.common.primitives.Ints;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-import de.eric_scheibler.tactileclock.ui.dialog.HelpDialog;
-
 
 import android.content.Intent;
 
 import android.os.Bundle;
 
+import android.view.MenuItem;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+
+import androidx.core.view.GravityCompat;
+
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentPagerAdapter;
+
+import androidx.viewpager.widget.ViewPager;
+
 import de.eric_scheibler.tactileclock.R;
 import de.eric_scheibler.tactileclock.ui.activity.AbstractActivity;
+import de.eric_scheibler.tactileclock.ui.dialog.HelpDialog;
 import de.eric_scheibler.tactileclock.ui.fragment.PowerButtonFragment;
 import de.eric_scheibler.tactileclock.ui.fragment.WatchFragment;
 import de.eric_scheibler.tactileclock.utils.TactileClockService;
@@ -99,6 +104,9 @@ public class MainActivity extends AbstractActivity {
         });
 
 		tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        //tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        //setTabGravity(TabLayout.GRAVITY_FILL);
+        //tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
         tabLayout.setupWithViewPager(viewPager);
 
         // open selected tab
@@ -109,13 +117,14 @@ public class MainActivity extends AbstractActivity {
         if (Ints.contains(FragmentValueArray, tabIndexFromBundle)) {
             selectedTabIndex = tabIndexFromBundle;
         } else {
-            selectedTabIndex = TAB_POWER_BUTTON;
+            selectedTabIndex = TAB_WATCH;
         }
         setToolbarTitle(selectedTabIndex);
         viewPager.setCurrentItem(selectedTabIndex);
 
         // start service
         Intent intent = new Intent(this, TactileClockService.class);
+        intent.setAction(TactileClockService.ACTION_UPDATE_NOTIFICATION);
         startService(intent);
     }
 

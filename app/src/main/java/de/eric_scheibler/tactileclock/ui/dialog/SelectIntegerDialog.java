@@ -9,38 +9,50 @@ import android.content.DialogInterface;
 
 import android.os.Bundle;
 
-import android.support.v4.app.DialogFragment;
-
-import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import de.eric_scheibler.tactileclock.listener.SelectIntegerDialogCloseListener;
+import androidx.fragment.app.DialogFragment;
+
 import de.eric_scheibler.tactileclock.R;
+import android.view.inputmethod.InputMethodManager;
+import android.view.WindowManager;
 
 
 public class SelectIntegerDialog extends DialogFragment {
+
+    public interface IntegerSelector {
+        public void integerSelected(Token token, Integer newInteger);
+    }
+
+    public enum Token {
+        POWER_BUTTON_LOWER_SUCCESS_BOUNDARY, POWER_BUTTON_UPPER_SUCCESS_BOUNDARY, WATCH_INTERVAL
+    }
 
     public static final int TOKEN_POWER_BUTTON_LOWER_SUCCESS_BOUNDARY = 14101;
     public static final int TOKEN_POWER_BUTTON_UPPER_SUCCESS_BOUNDARY = 14102;
     public static final int TOKEN_WATCH_INTERVAL = 14103;
 
     // Store instance variables
-    private SelectIntegerDialogCloseListener selectIntegerDialogCloseListener;
-    private int token, defaultValue;
+    private IntegerSelector selector;
+    private InputMethodManager imm;
+    private Token token;
+    private int defaultValue;
+
     private EditText editInteger;
 
-    public static SelectIntegerDialog newInstance(int token, int preSelectedInteger, int defaultValue) {
+    public static SelectIntegerDialog newInstance(Token token, int preSelectedInteger, int defaultValue) {
         SelectIntegerDialog selectIntegerDialogInstance = new SelectIntegerDialog();
         Bundle args = new Bundle();
-        args.putInt("token", token);
+        args.putSerializable("token", token);
         args.putInt("preSelectedInteger", preSelectedInteger);
         args.putInt("defaultValue", defaultValue);
         selectIntegerDialogInstance.setArguments(args);
@@ -50,27 +62,28 @@ public class SelectIntegerDialog extends DialogFragment {
     @Override public void onAttach(Context context){
         super.onAttach(context);
         if (getTargetFragment() != null
-                && getTargetFragment() instanceof SelectIntegerDialogCloseListener) {
-            selectIntegerDialogCloseListener = (SelectIntegerDialogCloseListener) getTargetFragment();
+                && getTargetFragment() instanceof IntegerSelector) {
+            selector = (IntegerSelector) getTargetFragment();
         } else if (context instanceof Activity
-                && (Activity) context instanceof SelectIntegerDialogCloseListener) {
-            selectIntegerDialogCloseListener = (SelectIntegerDialogCloseListener) context;
+                && (Activity) context instanceof IntegerSelector) {
+            selector = (IntegerSelector) context;
         }
+        imm =(InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
-        token = getArguments().getInt("token", -1);
+        token = (Token) getArguments().getSerializable("token");
         defaultValue = getArguments().getInt("defaultValue", -1);
 
         String dialogTitle;
         switch (token) {
-            case TOKEN_WATCH_INTERVAL:
+            case WATCH_INTERVAL:
                 dialogTitle = getResources().getString(R.string.selectWatchIntervalDialogTitle);
                 break;
-            case TOKEN_POWER_BUTTON_LOWER_SUCCESS_BOUNDARY:
+            case POWER_BUTTON_LOWER_SUCCESS_BOUNDARY:
                 dialogTitle = getResources().getString(R.string.selectPowerButtonLowerSuccessBoundaryDialogTitle);
                 break;
-            case TOKEN_POWER_BUTTON_UPPER_SUCCESS_BOUNDARY:
+            case POWER_BUTTON_UPPER_SUCCESS_BOUNDARY:
                 dialogTitle = getResources().getString(R.string.selectPowerButtonUpperSuccessBoundaryDialogTitle);
                 break;
             default:
@@ -110,12 +123,6 @@ public class SelectIntegerDialog extends DialogFragment {
                         public void onClick(DialogInterface dialog, int which) {
                         }
                     })
-            .setNeutralButton(
-                    getResources().getString(R.string.dialogDefault),
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    })
             .setNegativeButton(
                     getResources().getString(R.string.dialogCancel),
                     new DialogInterface.OnClickListener() {
@@ -129,18 +136,12 @@ public class SelectIntegerDialog extends DialogFragment {
         super.onStart();
         final AlertDialog dialog = (AlertDialog)getDialog();
         if(dialog != null) {
+            dialog.setCanceledOnTouchOutside(false);
             // positive button
             Button buttonPositive = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
             buttonPositive.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View view) {
                     setNewInteger();
-                }
-            });
-            // neutral button
-            Button buttonNeutral = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
-            buttonNeutral.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View view) {
-                    editInteger.setText(String.valueOf(defaultValue));
                 }
             });
             // negative button
@@ -151,27 +152,34 @@ public class SelectIntegerDialog extends DialogFragment {
                 }
             });
         }
+        // show keyboard
+        editInteger.post(new Runnable() {
+            @Override public void run() {
+                editInteger.requestFocus();
+                imm.showSoftInput(editInteger, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
     }
 
     @Override public void onStop() {
         super.onStop();
-        selectIntegerDialogCloseListener = null;
+        selector = null;
     }
 
     private void setNewInteger() {
-        int newInteger = -1;
+        Integer newInteger = null;
         try {
             newInteger = Integer.parseInt(editInteger.getText().toString());
         } catch (NumberFormatException e) {}
-        if (newInteger <= -1) {
+        if (newInteger == null || newInteger < 1) {
             Toast.makeText(
                     getActivity(),
                     getResources().getString(R.string.messageEnteredInvalidValue),
                     Toast.LENGTH_LONG).show();
             return;
         }
-        if (selectIntegerDialogCloseListener != null) {
-            selectIntegerDialogCloseListener.integerSelected(token, newInteger);
+        if (selector != null) {
+            selector.integerSelected(token, newInteger);
         }
         dismiss();
     }

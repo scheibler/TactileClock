@@ -24,40 +24,26 @@
     <string name="labelPowerButtonClickInterval">Click interval:</string>
     <string name="buttonPowerButtonLowerSuccessBoundary">From</string>
     <string name="buttonPowerButtonUpperSuccessBoundary">To</string>
-    <string name="labelErrorVibration">Warning vibration: If double click of power button is performed
-        accidentally while display is active</string>
+    <string name="labelErrorVibration">Warning vibration: If a double click of the power button is performed
+        accidentally while the display is active</string>
     <string name="buttonErrorVibration">Warning vibration</string>
 
     <!-- watch fragment -->
     <string name="fragmentWatch">Watch</string>
     <string name="labelWatchFragmentHeader">Continuous vibration of the current time</string>
     <string name="buttonStartWatch">Start watch</string>
-    <string name="buttonStopWatch">Stop watch</string>
-    <string name="messageWatchStarted">Watch started</string>
-    <string name="messageWatchStopped">Watch stopped</string>
     <string name="labelWatchOptions">Options:</string>
     <string name="buttonWatchInterval">Vibration interval</string>
-    <string name="buttonWatchAutoSwitchOff">Autom. switch-off</string>
     <string name="buttonWatchOnlyVibrateMinutes">Vibrate minutes only</string>
     <string name="buttonWatchStartAtNextFullHour">Start at next full hour</string>
+    <string name="buttonWatchAnnouncementVibration">Announcement vibration</string>
 
     <!-- select integer dialog -->
     <string name="selectWatchIntervalDialogTitle">Vibration interval in minutes:</string>
     <string name="selectPowerButtonLowerSuccessBoundaryDialogTitle">Lower click interval in ms:</string>
     <string name="selectPowerButtonUpperSuccessBoundaryDialogTitle">Upper click interval in ms:</string>
-    <string name="messageEnteredInvalidValue">The entered value must be > 0</string>
+    <string name="messageEnteredInvalidValue">The entered value must be greater than 0</string>
 
-    <!-- select time dialog -->
-    <string name="selectTimeDialogTitle">Select autom. switch-off time:</string>
-    <string name="buttonWatchAutoSwitchOffEnabled">Autom. switch-off</string>
-    <string name="buttonAddOneMinute">+1 Min</string>
-    <string name="buttonAddOneMinuteCD">Add one minute</string>
-    <string name="buttonAddTenMinutes">+10 Min</string>
-    <string name="buttonAddTenMinutesCD">Add ten minutes</string>
-    <string name="buttonAddOneHour">+1 Hour</string>
-    <string name="buttonAddOneHourCD">Add one hour</string>
-    <string name="messageInvalidHourValue">Hour must be between 0 and 23.</string>
-    <string name="messageInvalidMinuteValue">Minute must be between 0 and 59.</string>
 
     <!--
          other activities and dialogs
@@ -87,15 +73,16 @@
     <string name="labelHourFormat">Choose between 12 and 24 hour time format</string>
     <string name="button12Hours">12 hour format</string>
     <string name="button24Hours">24 hour fourmat</string>
-    <string name="labelTimeComponentOrder"></string>
+    <string name="labelTimeComponentOrder">Time component order</string>
     <string name="buttonHoursMinutes">Hours first, then minutes</string>
     <string name="buttonMinutesHours">Minutes first, then hours</string>
 
     <!-- info activity -->
     <string name="infoActivityTitle">Info</string>
     <string name="labelApplicationVersion">Version: </string>
-    <string name="labelEMailAddress">Contact: email@eric-scheibler.de</string>
-    <string name="labelWebsite">Website: https://github.com/scheibler/TactileClock</string>
+    <string name="labelContactHeading">Contact:</string>
+    <string name="labelEmailAddress">Email: %1$s</string>
+    <string name="labelWebsite">This app is free software. You may find the source code on &lt;a href="%1$s"&gt;GitHub&lt;/a&gt;.</string>
 
     <!-- service -->
     <string name="serviceNotification">Shortcut: %1$s, Watch: %2$s</string>
@@ -104,10 +91,8 @@
     <!-- standard messages, which are used in more than one component -->
     <string name="dialogOK">OK</string>
     <string name="dialogCancel">Cancel</string>
-    <string name="dialogDefault">Default</string>
     <string name="dialogEnabled">On</string>
     <string name="dialogDisabled">Off</string>
-    <string name="dialogNow">Now</string>
 
     <!--
          plurals

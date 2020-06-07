@@ -1,19 +1,25 @@
 package de.eric_scheibler.tactileclock.ui.fragment;
 
+import android.content.Context;
+
 import android.os.Bundle;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import de.eric_scheibler.tactileclock.R;
-import de.eric_scheibler.tactileclock.utils.SettingsManager;
-import android.content.Context;
-import android.widget.Button;
-import de.eric_scheibler.tactileclock.listener.SelectIntegerDialogCloseListener;
-import de.eric_scheibler.tactileclock.ui.dialog.SelectIntegerDialog;
 
-public class PowerButtonFragment extends AbstractFragment implements SelectIntegerDialogCloseListener {
+import de.eric_scheibler.tactileclock.R;
+import de.eric_scheibler.tactileclock.ui.dialog.SelectIntegerDialog.IntegerSelector;
+import de.eric_scheibler.tactileclock.ui.dialog.SelectIntegerDialog.Token;
+import de.eric_scheibler.tactileclock.ui.dialog.SelectIntegerDialog;
+import de.eric_scheibler.tactileclock.utils.SettingsManager;
+
+
+public class PowerButtonFragment extends AbstractFragment implements IntegerSelector {
 
 	// Store instance variables
 	private SettingsManager settingsManagerInstance;
@@ -30,7 +36,7 @@ public class PowerButtonFragment extends AbstractFragment implements SelectInteg
 
 	@Override public void onAttach(Context context) {
 		super.onAttach(context);
-		settingsManagerInstance = SettingsManager.getInstance(context);
+        settingsManagerInstance = new SettingsManager();
 	}
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,7 +60,7 @@ public class PowerButtonFragment extends AbstractFragment implements SelectInteg
         buttonPowerButtonLowerSuccessBoundary.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 SelectIntegerDialog dialog = SelectIntegerDialog.newInstance(
-                        SelectIntegerDialog.TOKEN_POWER_BUTTON_LOWER_SUCCESS_BOUNDARY,
+                        Token.POWER_BUTTON_LOWER_SUCCESS_BOUNDARY,
                         (int) settingsManagerInstance.getPowerButtonLowerSuccessBoundary(),
                         (int) SettingsManager.DEFAULT_POWER_BUTTON_LOWER_SUCCESS_BOUNDARY);
                 dialog.setTargetFragment(PowerButtonFragment.this, 1);
@@ -66,7 +72,7 @@ public class PowerButtonFragment extends AbstractFragment implements SelectInteg
         buttonPowerButtonUpperSuccessBoundary.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 SelectIntegerDialog dialog = SelectIntegerDialog.newInstance(
-                        SelectIntegerDialog.TOKEN_POWER_BUTTON_UPPER_SUCCESS_BOUNDARY,
+                        Token.POWER_BUTTON_UPPER_SUCCESS_BOUNDARY,
                         (int) settingsManagerInstance.getPowerButtonUpperSuccessBoundary(),
                         (int) SettingsManager.DEFAULT_POWER_BUTTON_UPPER_SUCCESS_BOUNDARY);
                 dialog.setTargetFragment(PowerButtonFragment.this, 1);
@@ -92,18 +98,21 @@ public class PowerButtonFragment extends AbstractFragment implements SelectInteg
         updateUI();
     }
 
-    @Override public void integerSelected(int token, int selectedInteger) {
-        switch (token) {
-            case SelectIntegerDialog.TOKEN_POWER_BUTTON_LOWER_SUCCESS_BOUNDARY:
-                settingsManagerInstance.setPowerButtonLowerSuccessBoundary(selectedInteger);
-                break;
-            case SelectIntegerDialog.TOKEN_POWER_BUTTON_UPPER_SUCCESS_BOUNDARY:
-                settingsManagerInstance.setPowerButtonUpperSuccessBoundary(selectedInteger);
-                break;
-            default:
-                break;
+    @Override public void integerSelected(Token token, Integer newInteger) {
+        if (newInteger != null) {
+            switch (token) {
+                case POWER_BUTTON_LOWER_SUCCESS_BOUNDARY:
+                    settingsManagerInstance.setPowerButtonLowerSuccessBoundary(newInteger);
+                    updateUI();
+                    break;
+                case POWER_BUTTON_UPPER_SUCCESS_BOUNDARY:
+                    settingsManagerInstance.setPowerButtonUpperSuccessBoundary(newInteger);
+                    updateUI();
+                    break;
+                default:
+                    break;
+            }
         }
-        updateUI();
     }
 
     private void updateUI() {

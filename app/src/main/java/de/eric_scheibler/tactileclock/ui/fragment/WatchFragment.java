@@ -5,7 +5,6 @@ import android.content.Context;
 
 import android.os.Bundle;
 
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,25 +13,22 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-import de.eric_scheibler.tactileclock.listener.SelectIntegerDialogCloseListener;
-import de.eric_scheibler.tactileclock.listener.SelectTimeDialogCloseListener;
 import de.eric_scheibler.tactileclock.R;
+import de.eric_scheibler.tactileclock.ui.dialog.SelectIntegerDialog.IntegerSelector;
+import de.eric_scheibler.tactileclock.ui.dialog.SelectIntegerDialog.Token;
 import de.eric_scheibler.tactileclock.ui.dialog.SelectIntegerDialog;
-import de.eric_scheibler.tactileclock.ui.dialog.SelectTimeDialog;
 import de.eric_scheibler.tactileclock.utils.SettingsManager;
 
-import java.util.Calendar;
-import java.util.Locale;
 
 
-public class WatchFragment extends AbstractFragment
-    implements SelectIntegerDialogCloseListener, SelectTimeDialogCloseListener {
+public class WatchFragment extends AbstractFragment implements IntegerSelector {
 
 	// Store instance variables
 	private SettingsManager settingsManagerInstance;
 
-    private Button buttonStartWatch, buttonWatchInterval, buttonWatchAutoSwitchOff;
-    private Switch buttonWatchOnlyVibrateMinutes, buttonWatchStartAtNextFullHour;
+    private Switch buttonStartWatch;
+    private Button buttonWatchInterval;
+    private Switch buttonWatchOnlyVibrateMinutes, buttonWatchStartAtNextFullHour, buttonWatchAnnouncementVibration;
 
     // newInstance constructor for creating fragment with arguments
     public static WatchFragment newInstance() {
@@ -42,7 +38,7 @@ public class WatchFragment extends AbstractFragment
 
 	@Override public void onAttach(Context context) {
 		super.onAttach(context);
-		settingsManagerInstance = SettingsManager.getInstance(context);
+        settingsManagerInstance = new SettingsManager();
 	}
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,15 +48,17 @@ public class WatchFragment extends AbstractFragment
 	@Override public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-        buttonStartWatch = (Button) view.findViewById(R.id.buttonStartWatch);
-        buttonStartWatch.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                if (! settingsManagerInstance.isWatchEnabled()) {
-                    settingsManagerInstance.enableWatch();
-                } else {
-                    settingsManagerInstance.disableWatch();
+        buttonStartWatch = (Switch) view.findViewById(R.id.buttonStartWatch);
+        buttonStartWatch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (settingsManagerInstance.isWatchEnabled() != isChecked) {
+                    if (! settingsManagerInstance.isWatchEnabled()) {
+                        settingsManagerInstance.enableWatch();
+                    } else {
+                        settingsManagerInstance.disableWatch();
+                    }
+                    updateUI();
                 }
-                updateUI();
             }
         });
 
@@ -68,20 +66,11 @@ public class WatchFragment extends AbstractFragment
         buttonWatchInterval.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 SelectIntegerDialog dialog = SelectIntegerDialog.newInstance(
-                        SelectIntegerDialog.TOKEN_WATCH_INTERVAL,
+                        Token.WATCH_INTERVAL,
                         settingsManagerInstance.getWatchVibrationIntervalInMinutes(),
                         SettingsManager.DEFAULT_WATCH_VIBRATION_INTERVAL);
                 dialog.setTargetFragment(WatchFragment.this, 1);
                 dialog.show(getActivity().getSupportFragmentManager(), "SelectIntegerDialog");
-            }
-        });
-
-        buttonWatchAutoSwitchOff = (Button) view.findViewById(R.id.buttonWatchAutoSwitchOff);
-        buttonWatchAutoSwitchOff.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                SelectTimeDialog dialog = SelectTimeDialog.newInstance();
-                dialog.setTargetFragment(WatchFragment.this, 1);
-                dialog.show(getActivity().getSupportFragmentManager(), "SelectTimeDialog");
             }
         });
 
@@ -90,7 +79,6 @@ public class WatchFragment extends AbstractFragment
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (settingsManagerInstance.getWatchOnlyVibrateMinutes() != isChecked) {
                     settingsManagerInstance.setWatchOnlyVibrateMinutes(isChecked);
-                    updateUI();
                 }
             }
         });
@@ -100,7 +88,15 @@ public class WatchFragment extends AbstractFragment
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (settingsManagerInstance.getWatchStartAtNextFullHour() != isChecked) {
                     settingsManagerInstance.setWatchStartAtNextFullHour(isChecked);
-                    updateUI();
+                }
+            }
+        });
+
+        buttonWatchAnnouncementVibration = (Switch) view.findViewById(R.id.buttonWatchAnnouncementVibration);
+        buttonWatchAnnouncementVibration.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (settingsManagerInstance.getWatchAnnouncementVibration() != isChecked) {
+                    settingsManagerInstance.setWatchAnnouncementVibration(isChecked);
                 }
             }
         });
@@ -113,25 +109,22 @@ public class WatchFragment extends AbstractFragment
         updateUI();
     }
 
-    @Override public void integerSelected(int token, int selectedInteger) {
-        switch (token) {
-            case SelectIntegerDialog.TOKEN_WATCH_INTERVAL:
-                settingsManagerInstance.setWatchVibrationIntervalInMinutes(selectedInteger);
-                break;
-            default:
-                break;
+    @Override public void integerSelected(Token token, Integer newInteger) {
+        if (newInteger != null) {
+            switch (token) {
+                case WATCH_INTERVAL:
+                    settingsManagerInstance.setWatchVibrationIntervalInMinutes(newInteger);
+                    updateUI();
+                    break;
+                default:
+                    break;
+            }
         }
-        updateUI();
     }
 
     private void updateUI() {
-        if (! settingsManagerInstance.isWatchEnabled()) {
-            buttonStartWatch.setText(
-                    getResources().getString(R.string.buttonStartWatch));
-        } else {
-            buttonStartWatch.setText(
-                    getResources().getString(R.string.buttonStopWatch));
-        }
+        buttonStartWatch.setChecked(
+                settingsManagerInstance.isWatchEnabled());
 
         buttonWatchInterval.setText(
                 String.format(
@@ -144,27 +137,6 @@ public class WatchFragment extends AbstractFragment
                 );
         buttonWatchInterval.setClickable(! settingsManagerInstance.isWatchEnabled());
 
-        if (settingsManagerInstance.getWatchAutoSwitchOffEnabled()) {
-            Calendar c = Calendar.getInstance();
-            c.setTimeInMillis(settingsManagerInstance.getWatchAutoSwitchOffTime());
-            buttonWatchAutoSwitchOff.setText(
-                    String.format(
-                        Locale.ROOT,
-                        "%1$s: %2$02d:%3$02d",
-                        getResources().getString(R.string.buttonWatchAutoSwitchOff),
-                        c.get(Calendar.HOUR_OF_DAY),
-                        c.get(Calendar.MINUTE))
-                    );
-        } else {
-            buttonWatchAutoSwitchOff.setText(
-                    String.format(
-                        "%1$s: %2$s",
-                        getResources().getString(R.string.buttonWatchAutoSwitchOff),
-                        getResources().getString(R.string.dialogDisabled))
-                    );
-        }
-        buttonWatchAutoSwitchOff.setClickable(! settingsManagerInstance.isWatchEnabled());
-
         buttonWatchOnlyVibrateMinutes.setChecked(
                 settingsManagerInstance.getWatchOnlyVibrateMinutes());
         buttonWatchOnlyVibrateMinutes.setClickable(! settingsManagerInstance.isWatchEnabled());
@@ -172,11 +144,10 @@ public class WatchFragment extends AbstractFragment
         buttonWatchStartAtNextFullHour.setChecked(
                 settingsManagerInstance.getWatchStartAtNextFullHour());
         buttonWatchStartAtNextFullHour.setClickable(! settingsManagerInstance.isWatchEnabled());
-    }
 
-    @Override public void timeSelected(boolean enabled, long selectedTime) {
-        settingsManagerInstance.setWatchAutoSwitchOffEnabled(enabled);
-        settingsManagerInstance.setWatchAutoSwitchOffTime(selectedTime);
+        buttonWatchAnnouncementVibration.setChecked(
+                settingsManagerInstance.getWatchAnnouncementVibration());
+        buttonWatchAnnouncementVibration.setClickable(! settingsManagerInstance.isWatchEnabled());
     }
 
 }

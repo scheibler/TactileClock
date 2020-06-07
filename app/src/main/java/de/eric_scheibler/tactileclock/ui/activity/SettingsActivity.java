@@ -2,14 +2,15 @@ package de.eric_scheibler.tactileclock.ui.activity;
 
 import android.os.Bundle;
 
-
-import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.support.v7.widget.Toolbar;
+import android.widget.RadioGroup;
+
+import androidx.appcompat.widget.Toolbar;
 
 import de.eric_scheibler.tactileclock.R;
+import de.eric_scheibler.tactileclock.data.HourFormat;
+import de.eric_scheibler.tactileclock.data.TimeComponentOrder;
 import de.eric_scheibler.tactileclock.ui.activity.AbstractActivity;
-import de.eric_scheibler.tactileclock.utils.Constants;
 
 
 public class SettingsActivity extends AbstractActivity {
@@ -33,10 +34,10 @@ public class SettingsActivity extends AbstractActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.button12Hours:
-                        settingsManagerInstance.setHourFormat(Constants.HourFormat.TWELVE_HOURS);
+                        settingsManagerInstance.setHourFormat(HourFormat.TWELVE_HOURS);
                         break;
                     case R.id.button24Hours:
-                        settingsManagerInstance.setHourFormat(Constants.HourFormat.TWENTYFOUR_HOURS);
+                        settingsManagerInstance.setHourFormat(HourFormat.TWENTYFOUR_HOURS);
                         break;
                     default:
                         break;
@@ -50,10 +51,10 @@ public class SettingsActivity extends AbstractActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.buttonHoursMinutes:
-                        settingsManagerInstance.setTimeComponentOrder(Constants.TimeComponentOrder.HOURS_MINUTES);
+                        settingsManagerInstance.setTimeComponentOrder(TimeComponentOrder.HOURS_MINUTES);
                         break;
                     case R.id.buttonMinutesHours:
-                        settingsManagerInstance.setTimeComponentOrder(Constants.TimeComponentOrder.MINUTES_HOURS);
+                        settingsManagerInstance.setTimeComponentOrder(TimeComponentOrder.MINUTES_HOURS);
                         break;
                     default:
                         break;
@@ -68,12 +69,12 @@ public class SettingsActivity extends AbstractActivity {
     }
 
     private void updateUI() {
-        if (settingsManagerInstance.getHourFormat() == Constants.HourFormat.TWELVE_HOURS) {
+        if (settingsManagerInstance.getHourFormat() == HourFormat.TWELVE_HOURS) {
             radioHourFormat.check(R.id.button12Hours);
         } else {
             radioHourFormat.check(R.id.button24Hours);
         }
-        if (settingsManagerInstance.getTimeComponentOrder() == Constants.TimeComponentOrder.MINUTES_HOURS) {
+        if (settingsManagerInstance.getTimeComponentOrder() == TimeComponentOrder.MINUTES_HOURS) {
             radioTimeComponentOrder.check(R.id.buttonMinutesHours);
         } else {
             radioTimeComponentOrder.check(R.id.buttonHoursMinutes);

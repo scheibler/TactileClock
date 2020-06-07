@@ -18,6 +18,7 @@
             android:id="@+id/buttonEnableService"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="@dimen/minHeight"
             android:text="@string/buttonEnableService" />
 
         <TextView
@@ -58,6 +59,7 @@
             android:id="@+id/buttonErrorVibration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="@dimen/minHeight"
             android:text="@string/buttonErrorVibration" />
 
     </LinearLayout>

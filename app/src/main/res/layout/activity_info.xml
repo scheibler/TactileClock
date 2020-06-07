@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -34,21 +36,35 @@
                 android:focusable="true"
                 android:text="@string/labelApplicationVersion" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:focusable="true"
-                android:text="@string/labelEMailAddress"
-                android:autoLink="email" />
+            <!-- contact -->
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:focusable="true"
-                android:text="@string/labelWebsite"
-                android:autoLink="web" />
+                android:text="@string/labelContactHeading"
+                android:textStyle="bold"
+                android:textColor="@color/heading"
+                android:accessibilityHeading="true"
+                tools:ignore="UnusedAttribute" />
+
+            <TextView
+                android:id="@+id/labelEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:autoLink="email" />
+
+            <!-- website -->
+
+            <TextView
+                android:id="@+id/labelWebsite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:focusable="true" />
+
         </LinearLayout>
     </ScrollView>
 

@@ -33,32 +33,17 @@
     <string name="fragmentWatch">Uhr</string>
     <string name="labelWatchFragmentHeader">Dauerhafte Vibration der aktuellen Uhrzeit</string>
     <string name="buttonStartWatch">Uhr starten</string>
-    <string name="buttonStopWatch">Uhr stoppen</string>
-    <string name="messageWatchStarted">Uhr gestartet</string>
-    <string name="messageWatchStopped">Uhr gestoppt</string>
     <string name="labelWatchOptions">Optionen:</string>
     <string name="buttonWatchInterval">Vibrationsintervall</string>
-    <string name="buttonWatchAutoSwitchOff">Autom. Abschaltung</string>
     <string name="buttonWatchOnlyVibrateMinutes">Nur Minuten vibrieren</string>
     <string name="buttonWatchStartAtNextFullHour">Start zur nächsten vollen Stunde</string>
+    <string name="buttonWatchAnnouncementVibration">Ankündigungsvibration</string>
 
     <!-- select integer dialog -->
     <string name="selectWatchIntervalDialogTitle">Vibrationsintervall in minuten:</string>
     <string name="selectPowerButtonLowerSuccessBoundaryDialogTitle">Unteres Klickintervall in ms:</string>
     <string name="selectPowerButtonUpperSuccessBoundaryDialogTitle">Oberes Klickintervall in ms:</string>
-    <string name="messageEnteredInvalidValue">Der eingegebene Wert muss > 0 sein.</string>
-
-    <!-- select time dialog -->
-    <string name="selectTimeDialogTitle">Autom. Abschaltzeit wählen:</string>
-    <string name="buttonWatchAutoSwitchOffEnabled">Autom. Abschaltung</string>
-    <string name="buttonAddOneMinute">+1 Min</string>
-    <string name="buttonAddOneMinuteCD">Eine Minute hinzu</string>
-    <string name="buttonAddTenMinutes">+10 Min</string>
-    <string name="buttonAddTenMinutesCD">Zehn Minuten hinzu</string>
-    <string name="buttonAddOneHour">+1 Std</string>
-    <string name="buttonAddOneHourCD">Eine Stunde hinzu</string>
-    <string name="messageInvalidHourValue">Der Wert für die Stunden muss zwischen 0 und 23 liegen.</string>
-    <string name="messageInvalidMinuteValue">Der Wert für die Minuten muss zwischen 0 und 59 liegen.</string>
+    <string name="messageEnteredInvalidValue">Der eingegebene Wert muss größer als 0 sein.</string>
 
 
     <!--
@@ -99,8 +84,9 @@
     <!-- info activity -->
     <string name="infoActivityTitle">Info</string>
     <string name="labelApplicationVersion">Version: </string>
-    <string name="labelEMailAddress">Kontakt: email@eric-scheibler.de</string>
-    <string name="labelWebsite">Webseite: https://github.com/scheibler/TactileClock</string>
+    <string name="labelContactHeading">Kontact:</string>
+    <string name="labelEmailAddress">Email: %1$s</string>
+    <string name="labelWebsite">Diese App ist freie Software. Der Quellcode kann auf &lt;a href="%1$s"&gt;GitHub&lt;/a&gt; eingesehen werden.</string>
 
     <!-- service -->
     <string name="serviceNotification">Shortcut: %1$s, Uhr: %2$s</string>
@@ -109,10 +95,8 @@
     <!-- standard messages, which are used in more than one component -->
     <string name="dialogOK">OK</string>
     <string name="dialogCancel">Abbrechen</string>
-    <string name="dialogDefault">Standard</string>
     <string name="dialogEnabled">Ein</string>
     <string name="dialogDisabled">Aus</string>
-    <string name="dialogNow">Jetzt</string>
 
 
     <!--

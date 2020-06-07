@@ -2,13 +2,17 @@ package de.eric_scheibler.tactileclock.ui.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+
 import android.content.Context;
 import android.content.DialogInterface;
+
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.DialogFragment;
 
 import de.eric_scheibler.tactileclock.R;
 import de.eric_scheibler.tactileclock.utils.SettingsManager;
@@ -25,7 +29,7 @@ public class HelpDialog extends DialogFragment {
 
     @Override public void onAttach(Context context){
         super.onAttach(context);
-        settingsManagerInstance = SettingsManager.getInstance(context);
+        settingsManagerInstance = new SettingsManager();
     }
 
     @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
