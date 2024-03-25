@@ -20,6 +20,9 @@ import timber.log.Timber;
 
 import de.eric_scheibler.tactileclock.BuildConfig;
 import de.eric_scheibler.tactileclock.R;
+import android.annotation.SuppressLint;
+import android.os.Handler;
+import java.lang.Runnable;
 
 
 
@@ -30,25 +33,30 @@ public class ApplicationInstance extends Application {
     @Override public void onCreate() {
         super.onCreate();
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        createNotificationChannel();
         // app context
         this.applicationInstance = this;
         // debug message initialization
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
-        // set notification channel for android 8
-        createNotificationChannel();
+
         // restore alarms from previous run
-        SettingsManager settingsManagerInstance = new SettingsManager();
-        boolean wasWatchEnabled = settingsManagerInstance.isWatchEnabled();
-        settingsManagerInstance.disableWatch();
-        if (wasWatchEnabled) {
-            settingsManagerInstance.enableWatch();
-        }
-        // update notivication
-        Intent updateNotificationIntent = new Intent(ApplicationInstance.this, TactileClockService.class);
-        updateNotificationIntent.setAction(TactileClockService.ACTION_UPDATE_NOTIFICATION);
-        ContextCompat.startForegroundService(ApplicationInstance.this, updateNotificationIntent);
+        // wait for a few seconds to prevent ForegroundServiceStartNotAllowedException after boot completed
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                SettingsManager settingsManagerInstance = new SettingsManager();
+                boolean wasWatchEnabled = settingsManagerInstance.isWatchEnabled();
+                settingsManagerInstance.disableWatch();
+                if (wasWatchEnabled) {
+                    settingsManagerInstance.enableWatch();
+                }
+                // update notivication
+                Intent updateNotificationIntent = new Intent(ApplicationInstance.this, TactileClockService.class);
+                updateNotificationIntent.setAction(TactileClockService.ACTION_UPDATE_NOTIFICATION);
+                ContextCompat.startForegroundService(ApplicationInstance.this, updateNotificationIntent);
+            }
+        }, 5000);
     }
 
 
@@ -79,7 +87,7 @@ public class ApplicationInstance extends Application {
                     getResources().getString(R.string.app_name),
                     NotificationManager.IMPORTANCE_LOW);
             notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-            notificationChannel.setShowBadge(true);
+            notificationChannel.setShowBadge(false);
             ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE))
                 .createNotificationChannel(notificationChannel);
         }
@@ -124,7 +132,14 @@ public class ApplicationInstance extends Application {
                 this,
                 PENDING_INTENT_VIBRATE_TIME_ID,
                 intent,
-                PendingIntent.FLAG_CANCEL_CURRENT);
+                getPendingIntentFlags());
+    }
+
+    @SuppressLint("Deprecation, UnspecifiedImmutableFlag")
+    private static int getPendingIntentFlags() {
+        return android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M
+            ? PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE
+            : PendingIntent.FLAG_CANCEL_CURRENT;
     }
 
 }

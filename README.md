@@ -2,14 +2,18 @@ Tactile Clock
 =============
 
 This Android app vibrates the current time when the display is locked and the power button is
-pressed twice in a row with a delay between 50 and 1500 milliseconds. If the double click is
+pressed twice in a row with a delay between 50 and 1350 milliseconds. If the double click is
 performed accidentally while the display is still active, the app warns with a long, persistent
 vibration.
 
-The background process is started automatically after booting is finished. Android version >= 4.1
-(API 16) is supported.
+You may also use Tactile clock to keep informed about the current time. For example let the app
+vibrate the current time every 5 minutes or every hour.
 
-Basically there exist two different vibration pattern: A short vibration stands for the digit 1 and
+The background process automatically initiates once the system has finished booting.
+
+The app supports all devices with Android version >= 4.1 (API 16).
+
+Basically there exist two different vibration patterns: A short vibration stands for the digit 1 and
 a long one for the digit 5. The 2 is represented by two consecutive short vibrations, the 6 by a
 long and a short one and so on. The 0 constitutes an exception with two long vibrations.
 

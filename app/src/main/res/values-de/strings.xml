@@ -87,6 +87,10 @@
     <string name="labelContactHeading">Kontact:</string>
     <string name="labelEmailAddress">Email: %1$s</string>
     <string name="labelWebsite">Diese App ist freie Software. Der Quellcode kann auf &lt;a href="%1$s"&gt;GitHub&lt;/a&gt; eingesehen werden.</string>
+    <string name="labelPrivacyHeading">Datenschutz</string>
+    <string name="labelPrivacy0">Die Android App Tactile Clock benötigt keine Internetverbindung.
+        Sämtliche Einstellungen werden ausschließlich auf dem Gerät selbst gespeichert und mit niemandem geteilt.</string>
+    <string name="labelPrivacy1">Die App ist freie Software und enthält keinerlei Werbung.</string>
 
     <!-- service -->
     <string name="serviceNotification">Shortcut: %1$s, Uhr: %2$s</string>

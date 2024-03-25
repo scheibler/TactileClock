@@ -19,6 +19,7 @@ import de.eric_scheibler.tactileclock.utils.SettingsManager;
 
 
 public class HelpDialog extends DialogFragment {
+    public static final String REQUEST_DIALOG_CLOSED = "dialogClosed";
 
     private SettingsManager settingsManagerInstance;
 
@@ -44,9 +45,8 @@ public class HelpDialog extends DialogFragment {
                     getResources().getString(R.string.dialogOK),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            if (settingsManagerInstance.getFirstStart()) {
-                                settingsManagerInstance.setFirstStart(false);
-                            }
+                            Bundle result = new Bundle();
+                            getParentFragmentManager().setFragmentResult(REQUEST_DIALOG_CLOSED, result);
                             dismiss();
                         }
                     })

@@ -61,21 +61,15 @@ public class MainActivity extends AbstractActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
                 drawerLayout.closeDrawers();
-                switch (menuItem.getItemId()) {
-                    case R.id.menuItemSettings:
-                        Intent intentStartSettingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
-                        startActivity(intentStartSettingsActivity);
-                        break;
-                    case R.id.menuItemInfo:
-                        Intent intentStartInfoActivity = new Intent(MainActivity.this, InfoActivity.class);
-                        startActivity(intentStartInfoActivity);
-                        break;
-                    case R.id.menuItemTutorial:
-                        HelpDialog.newInstance()
-                            .show(getSupportFragmentManager(), "HelpDialog");
-                        break;
-                    default:
-                        break;
+                if (menuItem.getItemId() == R.id.menuItemSettings) {
+                    Intent intentStartSettingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
+                    startActivity(intentStartSettingsActivity);
+                } else if (menuItem.getItemId() == R.id.menuItemInfo) {
+                    Intent intentStartInfoActivity = new Intent(MainActivity.this, InfoActivity.class);
+                    startActivity(intentStartInfoActivity);
+                } else if (menuItem.getItemId() == R.id.menuItemTutorial) {
+                    HelpDialog.newInstance()
+                        .show(getSupportFragmentManager(), "HelpDialog");
                 }
                 return true;
             }

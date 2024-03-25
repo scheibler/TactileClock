@@ -28,6 +28,10 @@ import de.eric_scheibler.tactileclock.data.TimeComponentOrder;
 import de.eric_scheibler.tactileclock.ui.activity.MainActivity;
 import de.eric_scheibler.tactileclock.utils.SettingsManager;
 import timber.log.Timber;
+import android.annotation.SuppressLint;
+import android.content.pm.ServiceInfo;
+import androidx.core.app.ServiceCompat;
+import android.app.ForegroundServiceStartNotAllowedException;
 
 
 public class TactileClockService extends Service {
@@ -82,10 +86,10 @@ public class TactileClockService extends Service {
             Timber.d("action: %1$s", intent.getAction());
 
             if (ACTION_UPDATE_NOTIFICATION.equals(intent.getAction())) {
-                startForeground(NOTIFICATION_ID, getServiceNotification());
+                startForegroundService();
                 if (! settingsManagerInstance.getPowerButtonServiceEnabled()
                         && ! settingsManagerInstance.isWatchEnabled()) {
-                    stopSelf();
+                    destroyService();
                 }
 
             } else if (Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
@@ -130,6 +134,22 @@ public class TactileClockService extends Service {
         }
     }
 
+    private void startForegroundService() {
+        int type = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+            ? ServiceInfo.FOREGROUND_SERVICE_TYPE_MANIFEST : 0;
+        try {
+            ServiceCompat.startForeground(
+                    this, NOTIFICATION_ID, getServiceNotification(), type);
+        } catch (Exception e) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                    && e instanceof ForegroundServiceStartNotAllowedException) {
+                // App not in a valid state to start foreground service
+                Timber.e("ForegroundServiceStartNotAllowedException");
+                destroyService();
+            }
+        }
+    }
+
     @Override public void onDestroy() {
         super.onDestroy();
         Timber.d("onDestroy");
@@ -138,6 +158,10 @@ public class TactileClockService extends Service {
                 unregisterReceiver(mScreenReceiver);
             }
         } catch (IllegalArgumentException e) {}
+        destroyService();
+    }
+
+    private void destroyService() {
         notificationManager.cancel(NOTIFICATION_ID);
         stopForeground(true);
         stopSelf();
@@ -274,7 +298,7 @@ public class TactileClockService extends Service {
         // launch MainActivity intent
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(
-                this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                this, 0, notificationIntent, getPendingIntentFlags());
         // notification message text
         String notificationMessage;
         if (settingsManagerInstance.isWatchEnabled()) {
@@ -311,6 +335,13 @@ public class TactileClockService extends Service {
             return getResources().getString(R.string.dialogEnabled);
         }
         return getResources().getString(R.string.dialogDisabled);
+    }
+
+    @SuppressLint("Deprecation, UnspecifiedImmutableFlag")
+    private static int getPendingIntentFlags() {
+        return android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M
+            ? PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+            : PendingIntent.FLAG_UPDATE_CURRENT;
     }
 
 

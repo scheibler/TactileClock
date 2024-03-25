@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.eric_scheibler.tactileclock" >
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <!-- permissions -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" android:minSdkVersion="28" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- service -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" android:minSdkVersion="28" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <!-- alarms -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -17,7 +23,7 @@
 
         <activity
             android:name=".ui.activity.MainActivity"
-            android:label="@string/app_name" >
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -37,10 +43,19 @@
             android:parentActivityName=".ui.activity.MainActivity" />
 
         <service
-            android:name="de.eric_scheibler.tactileclock.utils.TactileClockService" />
+            android:name="de.eric_scheibler.tactileclock.utils.TactileClockService"
+            android:foregroundServiceType="specialUse"
+            android:exported="false" >
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="The service permanently listens for screen on/off intents to detect a power button double click).
+                        If a double click is detected the service vibrates the current time.
+                        It is intended as an accessibility feature for blind people to determine the current time in loud surroundings without screen interaction." />
+        </service>
 
         <receiver
-            android:name="de.eric_scheibler.tactileclock.utils.ScreenReceiver" >
+            android:name="de.eric_scheibler.tactileclock.utils.ScreenReceiver"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

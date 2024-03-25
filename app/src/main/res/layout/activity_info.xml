@@ -65,6 +65,32 @@
                 android:layout_marginTop="10dp"
                 android:focusable="true" />
 
+
+            <!-- privacy -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:focusable="true"
+                android:text="@string/labelPrivacyHeading"
+                android:textStyle="bold"
+                android:textColor="@color/heading"
+                android:accessibilityHeading="true"
+                tools:ignore="UnusedAttribute" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:text="@string/labelPrivacy0" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:text="@string/labelPrivacy1" />
+
         </LinearLayout>
     </ScrollView>
 

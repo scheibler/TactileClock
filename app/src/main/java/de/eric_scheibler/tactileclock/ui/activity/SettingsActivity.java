@@ -32,15 +32,10 @@ public class SettingsActivity extends AbstractActivity {
         radioHourFormat = (RadioGroup) findViewById(R.id.radioHourFormat);
         radioHourFormat.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.button12Hours:
-                        settingsManagerInstance.setHourFormat(HourFormat.TWELVE_HOURS);
-                        break;
-                    case R.id.button24Hours:
-                        settingsManagerInstance.setHourFormat(HourFormat.TWENTYFOUR_HOURS);
-                        break;
-                    default:
-                        break;
+                if (checkedId == R.id.button12Hours) {
+                    settingsManagerInstance.setHourFormat(HourFormat.TWELVE_HOURS);
+                } else if (checkedId == R.id.button24Hours) {
+                    settingsManagerInstance.setHourFormat(HourFormat.TWENTYFOUR_HOURS);
                 }
             }
         });
@@ -49,15 +44,10 @@ public class SettingsActivity extends AbstractActivity {
         radioTimeComponentOrder = (RadioGroup) findViewById(R.id.radioTimeComponentOrder);
         radioTimeComponentOrder.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.buttonHoursMinutes:
-                        settingsManagerInstance.setTimeComponentOrder(TimeComponentOrder.HOURS_MINUTES);
-                        break;
-                    case R.id.buttonMinutesHours:
-                        settingsManagerInstance.setTimeComponentOrder(TimeComponentOrder.MINUTES_HOURS);
-                        break;
-                    default:
-                        break;
+                if (checkedId == R.id.buttonHoursMinutes) {
+                    settingsManagerInstance.setTimeComponentOrder(TimeComponentOrder.HOURS_MINUTES);
+                } else if (checkedId == R.id.buttonMinutesHours) {
+                    settingsManagerInstance.setTimeComponentOrder(TimeComponentOrder.MINUTES_HOURS);
                 }
             }
         });

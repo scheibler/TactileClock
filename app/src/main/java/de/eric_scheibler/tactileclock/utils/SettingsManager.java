@@ -29,6 +29,7 @@ public class SettingsManager {
     //
     // general
     private static final String KEY_FIRST_START = "firstStart";
+    private static final String KEY_ASKED_FOR_NOTIFICATION_PERMISSION = "askedForNotificationPermission";
     private static final String KEY_RECENT_OPEN_TAB = "recentOpenTab";
     private static final String KEY_HOUR_FORMAT = "hourFormat";
     private static final String KEY_TIME_COMPONENT_ORDER = "timeComponentOrder";
@@ -48,6 +49,7 @@ public class SettingsManager {
     //
     // general settings
     public static final boolean DEFAULT_FIRST_START = true;
+    public static final boolean DEFAULT_ASKED_FOR_NOTIFICATION_PERMISSION = false;
     // power button
     public static final boolean DEFAULT_POWER_BUTTON_SERVICE_ENABLED = true;
     public static final boolean DEFAULT_POWER_BUTTON_ERROR_VIBRATION = true;
@@ -55,7 +57,7 @@ public class SettingsManager {
     public static final long DEFAULT_POWER_BUTTON_LOWER_ERROR_BOUNDARY = 100;
     public static final long DEFAULT_POWER_BUTTON_UPPER_ERROR_BOUNDARY = 1000;
     public static final long DEFAULT_POWER_BUTTON_LOWER_SUCCESS_BOUNDARY = 250;
-    public static final long DEFAULT_POWER_BUTTON_UPPER_SUCCESS_BOUNDARY = 1250;
+    public static final long DEFAULT_POWER_BUTTON_UPPER_SUCCESS_BOUNDARY = 1350;
     // watch
     public static final boolean DEFAULT_WATCH_ENABLED = false;
     public static final int DEFAULT_WATCH_VIBRATION_INTERVAL = 5;
@@ -90,6 +92,18 @@ public class SettingsManager {
     public void setFirstStart(boolean firstStart) {
         Editor editor = settings.edit();
         editor.putBoolean(KEY_FIRST_START, firstStart);
+        editor.apply();
+    }
+
+    public boolean getAskedForNotificationPermission() {
+        return settings.getBoolean(
+                KEY_ASKED_FOR_NOTIFICATION_PERMISSION,
+                DEFAULT_ASKED_FOR_NOTIFICATION_PERMISSION);
+    }
+
+    public void setAskedForNotificationPermission(boolean askedForNotificationPermission) {
+        Editor editor = settings.edit();
+        editor.putBoolean(KEY_ASKED_FOR_NOTIFICATION_PERMISSION, askedForNotificationPermission);
         editor.apply();
     }
 
