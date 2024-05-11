@@ -23,6 +23,8 @@ import de.eric_scheibler.tactileclock.R;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import java.lang.Runnable;
+import java.util.Calendar;
+import android.os.SystemClock;
 
 
 
@@ -48,7 +50,8 @@ public class ApplicationInstance extends Application {
                 SettingsManager settingsManagerInstance = new SettingsManager();
                 boolean wasWatchEnabled = settingsManagerInstance.isWatchEnabled();
                 settingsManagerInstance.disableWatch();
-                if (wasWatchEnabled) {
+                if (wasWatchEnabled
+                        && ApplicationInstance.canScheduleExactAlarms()) {
                     settingsManagerInstance.enableWatch();
                 }
                 // update notivication
@@ -99,10 +102,51 @@ public class ApplicationInstance extends Application {
      */
     private static final int PENDING_INTENT_VIBRATE_TIME_ID = 39128;
 
+    /**
+     * SCHEDULE_EXACT_ALARM permission
+     * only required for android 12 (api 31 / S)
+     * on Android 13 onwards the implicitly granted permission USE_EXACT_ALARM is used and canScheduleExactAlarms() is always true
+     */
+    @TargetApi(Build.VERSION_CODES.S)
+    public static boolean canScheduleExactAlarms() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            return ((AlarmManager) ApplicationInstance.getContext().getSystemService(Context.ALARM_SERVICE)).canScheduleExactAlarms();
+        }
+        return true;
+    }
+
+    public boolean setAlarmAtFullHour(int hours) {
+        Calendar calendar = Calendar.getInstance();
+        // at full hour
+        calendar.setTimeInMillis(
+                System.currentTimeMillis() + hours*60*60*1000l);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        return setAlarm(calendar);
+    }
+
+    public boolean setAlarmAtFullMinute(int minutes) {
+        Calendar calendar = Calendar.getInstance();
+        // at full minute
+        calendar.setTimeInMillis(
+                System.currentTimeMillis() + minutes*60*1000l);
+        calendar.set(Calendar.SECOND, 0);
+        return setAlarm(calendar);
+    }
+
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public void setAlarm(long millisSinceDeviceStartup) {
+    @SuppressLint("MissingPermission")
+    private boolean setAlarm(Calendar calendar) {
+        if (! canScheduleExactAlarms()) {
+            return false;
+        }
+
+        long millisSinceDeviceStartup = SystemClock.elapsedRealtime()
+            + Math.abs(calendar.getTimeInMillis() - System.currentTimeMillis());
+
         // create vibrate time pending intent
         PendingIntent pendingIntent = createActionVibrateTimeAndSetNextAlarmPendingIntent();
+
         // set alarm
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager.setExactAndAllowWhileIdle(
@@ -114,6 +158,7 @@ public class ApplicationInstance extends Application {
             alarmManager.set(
                     AlarmManager.ELAPSED_REALTIME_WAKEUP, millisSinceDeviceStartup, pendingIntent);
         }
+        return true;
     }
 
     public void cancelAlarm() {

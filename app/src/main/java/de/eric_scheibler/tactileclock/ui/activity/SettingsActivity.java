@@ -11,10 +11,13 @@ import de.eric_scheibler.tactileclock.R;
 import de.eric_scheibler.tactileclock.data.HourFormat;
 import de.eric_scheibler.tactileclock.data.TimeComponentOrder;
 import de.eric_scheibler.tactileclock.ui.activity.AbstractActivity;
+import androidx.appcompat.widget.SwitchCompat;
+import android.widget.CompoundButton;
 
 
 public class SettingsActivity extends AbstractActivity {
 
+    private SwitchCompat switchMaxStrengthVibrations;
     private RadioGroup radioHourFormat, radioTimeComponentOrder;
 
 	@Override public void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,15 @@ public class SettingsActivity extends AbstractActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(
                 getResources().getString(R.string.settingsActivityTitle));
+
+        switchMaxStrengthVibrations = (SwitchCompat) findViewById(R.id.switchMaxStrengthVibrations);
+        switchMaxStrengthVibrations.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton view, boolean isChecked) {
+                if (isChecked != settingsManagerInstance.getMaxStrengthVibrationsEnabled()) {
+                    settingsManagerInstance.setMaxStrengthVibrationsEnabled(isChecked);
+                }
+            }
+        });
 
         // hour format
         radioHourFormat = (RadioGroup) findViewById(R.id.radioHourFormat);
@@ -59,6 +71,7 @@ public class SettingsActivity extends AbstractActivity {
     }
 
     private void updateUI() {
+        switchMaxStrengthVibrations.setChecked(settingsManagerInstance.getMaxStrengthVibrationsEnabled());
         if (settingsManagerInstance.getHourFormat() == HourFormat.TWELVE_HOURS) {
             radioHourFormat.check(R.id.button12Hours);
         } else {

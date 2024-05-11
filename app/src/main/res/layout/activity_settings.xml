@@ -18,6 +18,12 @@
             android:layout_marginRight="@dimen/activityMargin"
             android:orientation="vertical" >
 
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchMaxStrengthVibrations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/switchMaxStrengthVibrations" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -1,8 +1,8 @@
 package de.eric_scheibler.tactileclock.ui.activity;
 
+import androidx.core.content.ContextCompat;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
-import com.google.common.primitives.Ints;
 
 import android.content.Intent;
 
@@ -19,9 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
 
-import androidx.viewpager.widget.ViewPager;
 
 import de.eric_scheibler.tactileclock.R;
 import de.eric_scheibler.tactileclock.ui.activity.AbstractActivity;
@@ -29,28 +27,33 @@ import de.eric_scheibler.tactileclock.ui.dialog.HelpDialog;
 import de.eric_scheibler.tactileclock.ui.fragment.PowerButtonFragment;
 import de.eric_scheibler.tactileclock.ui.fragment.WatchFragment;
 import de.eric_scheibler.tactileclock.utils.TactileClockService;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
+import timber.log.Timber;
+import de.eric_scheibler.tactileclock.utils.ApplicationInstance;
 
 
 public class MainActivity extends AbstractActivity {
+    public static String EXTRA_NEW_TAB = "newTab";
 
-    // fragments
-    public static final int TAB_POWER_BUTTON = 0;
-    public static final int TAB_WATCH = 1;
-    public final static int[] FragmentValueArray = { 
-        TAB_POWER_BUTTON, TAB_WATCH
-    };
 
 	private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
-	private ViewPager viewPager;
-    private TabAdapter tabAdapter;
+	private ViewPager2 viewPager;
     private TabLayout tabLayout;
-    private int selectedTabIndex;
+    private Tab selectedTab;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Timber.d("onCreate");
+
+        // start service
+        Intent startServiceIntent = new Intent(this, TactileClockService.class);
+        startServiceIntent.setAction(TactileClockService.ACTION_UPDATE_NOTIFICATION);
+            ContextCompat.startForegroundService(
+                    ApplicationInstance.getContext(), startServiceIntent);
 
         // navigation drawer
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -83,48 +86,71 @@ public class MainActivity extends AbstractActivity {
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-        tabAdapter = new TabAdapter(this);
-		viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(tabAdapter);
-        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        // ViewPager2 and TabLayout
+
+		viewPager = (ViewPager2) findViewById(R.id.pager);
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override public void onPageSelected(int position) {
-    			if (selectedTabIndex != position) {
-                    // set toolbar title
-                    setToolbarTitle(position);
-                    // save active fragment
-    				selectedTabIndex = position;
-                }
+                Timber.d("onPageSelected: %1$d", position);
+                tabLayout.selectTab(tabLayout.getTabAt(position));
+                setToolbarTitle(position);
+                selectedTab = Tab.getTabAtPosition(position);
             }
         });
 
 		tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        //tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        //setTabGravity(TabLayout.GRAVITY_FILL);
-        //tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override public void onTabSelected(TabLayout.Tab tab) {
+                loadFragment(tab.getPosition());
+            }
+            @Override public void onTabUnselected(TabLayout.Tab tab) {
+            }
+            @Override public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
 
-        // open selected tab
-        int tabIndexFromBundle = -1;
-        if (savedInstanceState != null) {
-            tabIndexFromBundle = savedInstanceState.getInt("selectedTabIndex");
+        // prepare tab adapter and load tab
+
+        TabAdapter tabAdapter = new TabAdapter(MainActivity.this);
+        for (int pos=0; pos<tabAdapter.getItemCount(); pos++) {
+            TabLayout.Tab tab = tabLayout.newTab();
+            tab.setText(tabAdapter.getFragmentName(pos));
+            tabLayout.addTab(tab);
         }
-        if (Ints.contains(FragmentValueArray, tabIndexFromBundle)) {
-            selectedTabIndex = tabIndexFromBundle;
+        viewPager.setAdapter(tabAdapter);
+
+        Tab tabToOpen = getTabFromIntent(getIntent());
+        if (tabToOpen != null) {
+            loadFragment(tabToOpen.position);
         } else {
-            selectedTabIndex = TAB_WATCH;
+            if (savedInstanceState != null) {
+                tabToOpen = (Tab) savedInstanceState.getSerializable("selectedTab");
+            }
+            if (tabToOpen == null) {
+                tabToOpen = Tab.CLOCK;
+            }
+            loadFragment(tabToOpen.position);
         }
-        setToolbarTitle(selectedTabIndex);
-        viewPager.setCurrentItem(selectedTabIndex);
+    }
 
-        // start service
-        Intent intent = new Intent(this, TactileClockService.class);
-        intent.setAction(TactileClockService.ACTION_UPDATE_NOTIFICATION);
-        startService(intent);
+    @Override protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Tab tabToOpen = getTabFromIntent(intent);
+        if (tabToOpen != null) {
+            loadFragment(tabToOpen.position);
+        }
+    }
+
+    private Tab getTabFromIntent(Intent intent) {
+        if (intent != null && intent.getExtras() != null) {
+            return (Tab) intent.getExtras().getSerializable(EXTRA_NEW_TAB);
+        }
+        return null;
     }
 
     @Override public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putInt("selectedTabIndex", selectedTabIndex);
+        savedInstanceState.putSerializable("selectedTab", selectedTab);
     }
 
     @Override public void onBackPressed() {
@@ -137,44 +163,75 @@ public class MainActivity extends AbstractActivity {
 
     private void setToolbarTitle(int tabIndex) {
         getSupportActionBar().setTitle(
-                tabAdapter.getPageTitle(tabIndex).toString());
+                tabLayout.getTabAt(tabIndex).getText().toString());
     }
 
 
     /**
-     * tab adapter
+     * tabs
      */
 
-	public class TabAdapter extends FragmentPagerAdapter {
+    public enum Tab {
+        CLOCK(0),
+        SHORTCUT(1);
 
-		public TabAdapter(FragmentActivity activity) {
-			super(activity.getSupportFragmentManager());
-		}
-
-        @Override public Fragment getItem(int position) {
-            switch (position) {
-                case TAB_POWER_BUTTON:
-                    return PowerButtonFragment.newInstance();
-                case TAB_WATCH:
-                    return WatchFragment.newInstance();
-                default:
-                    return null;
+        public static Tab getTabAtPosition(int position) {
+            for (Tab tab : Tab.values()) {
+                if (tab.position == position) {
+                    return tab;
+                }
             }
+            return null;
         }
 
-		@Override public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case TAB_POWER_BUTTON:
-                    return getResources().getString(R.string.fragmentPowerButton);
-                case TAB_WATCH:
-                    return getResources().getString(R.string.fragmentWatch);
-                default:
-                    return "";
-            }
+        public int position;
+
+        private Tab(int position) {
+            this.position = position;
+        }
+    }
+
+
+    private void loadFragment(int newTabIndex) {
+        Timber.d("loadFragment: newTabIndex=%1$d", newTabIndex);
+        viewPager.setCurrentItem(newTabIndex);
+    }
+
+
+	private class TabAdapter extends FragmentStateAdapter {
+
+        public TabAdapter(FragmentActivity activity) {
+            super(activity);
         }
 
-		@Override public int getCount() {
-			return FragmentValueArray.length;
+        @Override public Fragment createFragment(int position) {
+            Tab tab = Tab.getTabAtPosition(position);
+            if (tab != null) {
+                switch (tab) {
+                    case CLOCK:
+                        return WatchFragment.newInstance();
+                    case SHORTCUT:
+                        return PowerButtonFragment.newInstance();
+                }
+            }
+            return null;
+        }
+
+		@Override public int getItemCount() {
+            return Tab.values().length;
+        }
+
+        public String getFragmentName(int position) {
+            Tab tab = Tab.getTabAtPosition(position);
+            if (tab != null) {
+                switch (tab) {
+                    case CLOCK:
+                        return getResources().getString(R.string.fragmentWatch);
+                    case SHORTCUT:
+                        return getResources().getString(R.string.fragmentPowerButton);
+                }
+            }
+                return "";
         }
     }
 

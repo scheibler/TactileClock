@@ -1,6 +1,6 @@
 package de.eric_scheibler.tactileclock.ui.fragment;
 
-
+import android.app.AlarmManager;
 import android.content.Context;
 
 import android.os.Bundle;
@@ -18,10 +18,17 @@ import de.eric_scheibler.tactileclock.ui.dialog.SelectIntegerDialog.IntegerSelec
 import de.eric_scheibler.tactileclock.ui.dialog.SelectIntegerDialog.Token;
 import de.eric_scheibler.tactileclock.ui.dialog.SelectIntegerDialog;
 import de.eric_scheibler.tactileclock.utils.SettingsManager;
+import androidx.fragment.app.Fragment;
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.content.Intent;
+import android.provider.Settings;
+import de.eric_scheibler.tactileclock.utils.ApplicationInstance;
+import timber.log.Timber;
 
 
 
-public class WatchFragment extends AbstractFragment implements IntegerSelector {
+public class WatchFragment extends Fragment implements IntegerSelector {
 
 	// Store instance variables
 	private SettingsManager settingsManagerInstance;
@@ -36,8 +43,8 @@ public class WatchFragment extends AbstractFragment implements IntegerSelector {
         return watchFragmentInstance;
     }
 
-	@Override public void onAttach(Context context) {
-		super.onAttach(context);
+	@Override public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         settingsManagerInstance = new SettingsManager();
 	}
 
@@ -49,18 +56,7 @@ public class WatchFragment extends AbstractFragment implements IntegerSelector {
 		super.onViewCreated(view, savedInstanceState);
 
         buttonStartWatch = (Switch) view.findViewById(R.id.buttonStartWatch);
-        buttonStartWatch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (settingsManagerInstance.isWatchEnabled() != isChecked) {
-                    if (! settingsManagerInstance.isWatchEnabled()) {
-                        settingsManagerInstance.enableWatch();
-                    } else {
-                        settingsManagerInstance.disableWatch();
-                    }
-                    updateUI();
-                }
-            }
-        });
+        buttonStartWatch.setOnCheckedChangeListener(null);
 
         buttonWatchInterval = (Button) view.findViewById(R.id.buttonWatchInterval);
         buttonWatchInterval.setOnClickListener(new View.OnClickListener() {
@@ -102,10 +98,17 @@ public class WatchFragment extends AbstractFragment implements IntegerSelector {
         });
     }
 
-	@Override public void fragmentInvisible() {
+    @Override public void onPause() {
+        super.onPause();
     }
 
-    @Override public void fragmentVisible() {
+    @Override public void onResume() {
+        super.onResume();
+        if (settingsManagerInstance.isWatchEnabled()
+                && ! ApplicationInstance.canScheduleExactAlarms()) {
+            settingsManagerInstance.disableWatch();
+        }
+
         updateUI();
     }
 
@@ -125,6 +128,18 @@ public class WatchFragment extends AbstractFragment implements IntegerSelector {
     private void updateUI() {
         buttonStartWatch.setChecked(
                 settingsManagerInstance.isWatchEnabled());
+        buttonStartWatch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (settingsManagerInstance.isWatchEnabled() != isChecked) {
+                    if (! settingsManagerInstance.isWatchEnabled()) {
+                        tryToEnableWatch();
+                    } else {
+                        settingsManagerInstance.disableWatch();
+                    }
+                    updateUI();
+                }
+            }
+        });
 
         buttonWatchInterval.setText(
                 String.format(
@@ -148,6 +163,18 @@ public class WatchFragment extends AbstractFragment implements IntegerSelector {
         buttonWatchAnnouncementVibration.setChecked(
                 settingsManagerInstance.getWatchAnnouncementVibration());
         buttonWatchAnnouncementVibration.setClickable(! settingsManagerInstance.isWatchEnabled());
+    }
+
+    @TargetApi(Build.VERSION_CODES.S)
+    private void tryToEnableWatch() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            if (! ApplicationInstance.canScheduleExactAlarms()) {
+                Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                startActivity(intent);
+                return;
+            }
+        }
+        settingsManagerInstance.enableWatch();
     }
 
 }

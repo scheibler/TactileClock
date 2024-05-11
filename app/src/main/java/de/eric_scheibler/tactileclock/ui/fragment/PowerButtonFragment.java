@@ -17,9 +17,10 @@ import de.eric_scheibler.tactileclock.ui.dialog.SelectIntegerDialog.IntegerSelec
 import de.eric_scheibler.tactileclock.ui.dialog.SelectIntegerDialog.Token;
 import de.eric_scheibler.tactileclock.ui.dialog.SelectIntegerDialog;
 import de.eric_scheibler.tactileclock.utils.SettingsManager;
+import androidx.fragment.app.Fragment;
 
 
-public class PowerButtonFragment extends AbstractFragment implements IntegerSelector {
+public class PowerButtonFragment extends Fragment implements IntegerSelector {
 
 	// Store instance variables
 	private SettingsManager settingsManagerInstance;
@@ -34,8 +35,8 @@ public class PowerButtonFragment extends AbstractFragment implements IntegerSele
         return powerButtonFragmentInstance;
     }
 
-	@Override public void onAttach(Context context) {
-		super.onAttach(context);
+	@Override public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         settingsManagerInstance = new SettingsManager();
 	}
 
@@ -91,10 +92,12 @@ public class PowerButtonFragment extends AbstractFragment implements IntegerSele
         });
     }
 
-	@Override public void fragmentInvisible() {
+    @Override public void onPause() {
+        super.onPause();
     }
 
-    @Override public void fragmentVisible() {
+    @Override public void onResume() {
+        super.onResume();
         updateUI();
     }
 

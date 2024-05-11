@@ -7,6 +7,8 @@
 
     <!-- main activity -->
     <string name="app_name">Tactile Clock</string>
+    <!-- shortcuts -->
+    <string name="labelShortcutVibrateTime">Uhrzeit vibrieren</string>
     <!-- toolbar -->
     <string name="openNavigationDrawer">Menü öffnen</string>
     <string name="closeNavigationDrawer">Menü schließen</string>
@@ -74,6 +76,7 @@
 
     <!-- settings activity -->
     <string name="settingsActivityTitle">Einstellungen</string>
+    <string name="switchMaxStrengthVibrations">Mit maximaler Intensität vibrieren</string>
     <string name="labelHourFormat">Wähle zwischen 12 und 24 Stunden Zeitformat</string>
     <string name="button12Hours">12 Stunden Format</string>
     <string name="button24Hours">24 Stunden Format</string>

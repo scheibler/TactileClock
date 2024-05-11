@@ -2,6 +2,15 @@
 
 
 
+## v2.3.0: Released at 2024-05-11
+
+- Added shortcut to vibrate the current time
+- Increased vibration intensity for Android versions >= 8
+- Fixed drifting alarms
+- Updated to ViewPager2 and other small ui fixes
+
+
+
 ## v2.2.0: Released at 2024-03-25
 
 - Support for Android 14 (SDK 34)

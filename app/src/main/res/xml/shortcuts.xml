@@ -1,0 +1,17 @@
+<shortcuts
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <shortcut
+        android:shortcutId="shortcutVibrateTime"
+        android:icon="@drawable/ic_launcher"
+        android:shortcutShortLabel="@string/labelShortcutVibrateTime"
+        tools:ignore="UnusedAttribute" >
+
+        <intent
+            android:action="de.eric_scheibler.tactileclock.action.vibrate_time"
+            android:targetPackage="de.eric_scheibler.tactileclock"
+            android:targetClass="de.eric_scheibler.tactileclock.ui.activity.ShortcutActivity" />
+    </shortcut>
+
+</shortcuts>

@@ -31,8 +31,8 @@ android {
         minSdkVersion 16
         targetSdkVersion 34
         multiDexEnabled true
-        versionCode 10
-        versionName '2.2.0'
+        versionCode 11
+        versionName '2.3.0'
         // project website
         buildConfigField 'String', 'CONTACT_EMAIL_ADDRESS', '"tactile-clock@eric-scheibler.de"'
         buildConfigField 'String', 'PROJECT_WEBSITE', '"https://github.com/scheibler/TactileClock"'
@@ -72,7 +72,7 @@ dependencies {
     implementation 'androidx.drawerlayout:drawerlayout:1.2.0'
     implementation 'androidx.fragment:fragment:1.6.2'
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
-    implementation 'androidx.viewpager:viewpager:1.0.0'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
     // material design
     implementation 'com.google.android.material:material:1.11.0'
     // guava

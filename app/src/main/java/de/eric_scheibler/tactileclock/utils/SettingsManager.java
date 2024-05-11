@@ -1,9 +1,7 @@
 package de.eric_scheibler.tactileclock.utils;
 
 
-import java.lang.Math;
 
-import java.util.Calendar;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +9,6 @@ import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
 
-import android.os.SystemClock;
 
 import android.preference.PreferenceManager;
 
@@ -33,6 +30,7 @@ public class SettingsManager {
     private static final String KEY_RECENT_OPEN_TAB = "recentOpenTab";
     private static final String KEY_HOUR_FORMAT = "hourFormat";
     private static final String KEY_TIME_COMPONENT_ORDER = "timeComponentOrder";
+    private static final String KEY_MAX_STRENGTH_VIBRATIONS_ENABLED = "maxStrengthVibrationsEnabled";
     // power button
     private static final String KEY_POWER_BUTTON_SERVICE_ENABLED = "enableService";
     private static final String KEY_POWER_BUTTON_ERROR_VIBRATION = "errorVibration";
@@ -50,6 +48,7 @@ public class SettingsManager {
     // general settings
     public static final boolean DEFAULT_FIRST_START = true;
     public static final boolean DEFAULT_ASKED_FOR_NOTIFICATION_PERMISSION = false;
+    public static final boolean DEFAULT_MAX_STRENGTH_VIBRATIONS_ENABLED = true;
     // power button
     public static final boolean DEFAULT_POWER_BUTTON_SERVICE_ENABLED = true;
     public static final boolean DEFAULT_POWER_BUTTON_ERROR_VIBRATION = true;
@@ -139,6 +138,18 @@ public class SettingsManager {
         editor.apply();
     }
 
+    public boolean getMaxStrengthVibrationsEnabled() {
+        return settings.getBoolean(
+                KEY_MAX_STRENGTH_VIBRATIONS_ENABLED,
+                DEFAULT_MAX_STRENGTH_VIBRATIONS_ENABLED);
+    }
+
+    public void setMaxStrengthVibrationsEnabled(boolean enabled) {
+        Editor editor = settings.edit();
+        editor.putBoolean(KEY_MAX_STRENGTH_VIBRATIONS_ENABLED, enabled);
+        editor.apply();
+    }
+
 
     /**
      * power button
@@ -220,20 +231,13 @@ public class SettingsManager {
     public void enableWatch() {
         setWatchEnabled(true);
         // set first exact watch vibration alarm
-        Calendar calendar = Calendar.getInstance();
         if (this.getWatchStartAtNextFullHour()) {
             // at next full hour
-            calendar.setTimeInMillis(System.currentTimeMillis() + 60*60*1000l);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
+            ((ApplicationInstance) ApplicationInstance.getContext()).setAlarmAtFullHour(1);
         } else {
             // at next full minute
-            calendar.setTimeInMillis(System.currentTimeMillis() + 60*1000l);
-            calendar.set(Calendar.SECOND, 0);
+            ((ApplicationInstance) ApplicationInstance.getContext()).setAlarmAtFullMinute(1);
         }
-        ((ApplicationInstance) ApplicationInstance.getContext()).setAlarm(
-                SystemClock.elapsedRealtime()
-                    + Math.abs(calendar.getTimeInMillis() - System.currentTimeMillis()));
     }
 
     public void disableWatch() {
