@@ -2,6 +2,13 @@
 
 
 
+## v2.4.0: Released at 2025-07-09
+
+- More space between the top edge of the screen and the first main menu item "settings" (#2)
+- Support for Android 16 (SDK 36)
+
+
+
 ## v2.3.0: Released at 2024-05-11
 
 - Added shortcut to vibrate the current time

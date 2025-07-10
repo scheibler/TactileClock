@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-rocket-launcher'
 
 // get signing properties
 Properties keystoreProperties = new Properties()
@@ -20,19 +19,16 @@ if (keystoreProperties.isEmpty()) {
 }
 
 android {
-    compileSdkVersion 34
+    compileSdkVersion 36
     namespace "de.eric_scheibler.tactileclock"
 
-    androidResources {
-        generateLocaleConfig true
-    }
-
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 34
+        minSdkVersion 21
+        targetSdkVersion 36
+        resConfigs "en", "de"
         multiDexEnabled true
-        versionCode 11
-        versionName '2.3.0'
+        versionCode 12
+        versionName '2.4.0'
         // project website
         buildConfigField 'String', 'CONTACT_EMAIL_ADDRESS', '"tactile-clock@eric-scheibler.de"'
         buildConfigField 'String', 'PROJECT_WEBSITE', '"https://github.com/scheibler/TactileClock"'
@@ -60,30 +56,40 @@ android {
         }
     }
 
+    dependenciesInfo {
+        // Disables dependency metadata when building APKs.
+        includeInApk = false
+    }
+
     lintOptions {
-        disable "GoogleAppIndexingWarning", "Autofill", "IconLauncherShape", "ButtonStyle"
+        //disable "GoogleAppIndexingWarning", "Autofill", "IconLauncherShape", "ButtonStyle"
+        disable "InflateParams", "GoogleAppIndexingWarning"
+        enable "NewerVersionAvailable"
+        abortOnError true
     }
 }
 
 dependencies {
     // android x
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.core:core:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'androidx.core:core:1.16.0'
     implementation 'androidx.drawerlayout:drawerlayout:1.2.0'
-    implementation 'androidx.fragment:fragment:1.6.2'
+    implementation 'androidx.fragment:fragment:1.8.8'
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
-    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+
     // material design
-    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'com.google.android.material:material:1.12.0'
+
     // guava
-    implementation 'com.google.guava:guava:31.0.1-android'
+    implementation 'com.google.guava:guava:33.4.8-android'
+
     // logging
-    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation 'com.jakewharton.timber:timber:5.0.1'
 }
 
-configurations.implementation {
-    // must exclude that jdk below, otherwise classes get duplicated
-    // required since update of androidx.core dependency to version 1.10.0
-    exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+// Open the APK on your Android Device
+ext {
+    mainActivityClass = 'de.eric_scheibler.tactileclock.ui.activity.MainActivity'
 }
+apply from: 'gradle-scripts/openApkTask.gradle'
 

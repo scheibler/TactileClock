@@ -20,9 +20,12 @@ public class SettingsActivity extends AbstractActivity {
     private SwitchCompat switchMaxStrengthVibrations;
     private RadioGroup radioHourFormat, radioTimeComponentOrder;
 
+    @Override public int getLayoutResourceId() {
+        return R.layout.activity_settings;
+    }
+
 	@Override public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_settings);
 
         // toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

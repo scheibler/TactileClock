@@ -134,7 +134,6 @@ public class ApplicationInstance extends Application {
         return setAlarm(calendar);
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     @SuppressLint("MissingPermission")
     private boolean setAlarm(Calendar calendar) {
         if (! canScheduleExactAlarms()) {
@@ -151,11 +150,8 @@ public class ApplicationInstance extends Application {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager.setExactAndAllowWhileIdle(
                     AlarmManager.ELAPSED_REALTIME_WAKEUP, millisSinceDeviceStartup, pendingIntent);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            alarmManager.setExact(
-                    AlarmManager.ELAPSED_REALTIME_WAKEUP, millisSinceDeviceStartup, pendingIntent);
         } else {
-            alarmManager.set(
+            alarmManager.setExact(
                     AlarmManager.ELAPSED_REALTIME_WAKEUP, millisSinceDeviceStartup, pendingIntent);
         }
         return true;

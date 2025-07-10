@@ -1,0 +1,26 @@
+// Open the APK on your Android Device
+
+android.applicationVariants.all { variant ->
+    def installProvider = variant.installProvider
+    if (installProvider != null) {
+
+        tasks.create(name: "open${variant.name.capitalize()}", type: Exec) {
+            group = 'Open'
+            description = "Installs and opens the APK for ${variant.description}."
+            dependsOn installProvider
+
+            doFirst {
+                def mainActivity = project.ext.mainActivityClass
+                if (!mainActivity) {
+                    throw new GradleException("Variable mainActivityClass not set in app/build.gradle")
+                } else if (mainActivity.startsWith('.')) {
+                    throw new GradleException("Variable mainActivityClass must be an absolute path including the package name")
+                }
+
+                commandLine android.adbExe, 'shell', 'am', 'start', '-n',
+                        "${variant.applicationId}/${mainActivity}"
+            }
+        }
+    }
+
+}

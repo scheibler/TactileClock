@@ -31,6 +31,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import timber.log.Timber;
 import de.eric_scheibler.tactileclock.utils.ApplicationInstance;
+import androidx.activity.OnBackPressedCallback;
 
 
 public class MainActivity extends AbstractActivity {
@@ -44,10 +45,12 @@ public class MainActivity extends AbstractActivity {
     private TabLayout tabLayout;
     private Tab selectedTab;
 
+    @Override public int getLayoutResourceId() {
+        return R.layout.activity_main;
+    }
+
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Timber.d("onCreate");
 
         // start service
         Intent startServiceIntent = new Intent(this, TactileClockService.class);
@@ -77,6 +80,18 @@ public class MainActivity extends AbstractActivity {
                 return true;
             }
         });
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override public void handleOnBackPressed() {
+                Timber.d("handleOnBackPressed");
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawers();
+                } else {
+                    moveTaskToBack(true);
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
 
         // toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -151,14 +166,6 @@ public class MainActivity extends AbstractActivity {
     @Override public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putSerializable("selectedTab", selectedTab);
-    }
-
-    @Override public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawers();
-        } else {
-            super.onBackPressed();
-        }
     }
 
     private void setToolbarTitle(int tabIndex) {

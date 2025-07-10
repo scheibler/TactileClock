@@ -19,9 +19,12 @@ import de.eric_scheibler.tactileclock.ui.activity.AbstractActivity;
 
 public class InfoActivity extends AbstractActivity {
 
+    @Override public int getLayoutResourceId() {
+        return R.layout.activity_info;
+    }
+
 	@Override public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_info);
 
         // toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
