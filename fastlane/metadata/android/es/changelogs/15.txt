@@ -1,0 +1,2 @@
+- Integración con Tasker agregada
+- Traducción al ucraniano agregada

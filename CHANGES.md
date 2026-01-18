@@ -2,6 +2,13 @@
 
 
 
+## v2.6.0: Released at 2026-01-18
+
+- Add Tasker integration
+- Add Ukrainian translation
+
+
+
 ## v2.5.1: Released at 2025-12-29
 
 - Add stop-clock action to the service notification

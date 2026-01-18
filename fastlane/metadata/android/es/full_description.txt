@@ -47,6 +47,9 @@ Funciones adicionales
 
 * Mantente informado sobre la hora actual. La aplicación puede vibrar la hora actual automáticamente cada X minutos o cada hora.
 * Reproduce la [Señal Horaria de Greenwich](https://es.wikipedia.org/wiki/Greenwich_Time_Signal) al inicio de cada hora, similar a una estación de radio.
+* Integración con [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm): Si tu
+  smartphone tiene un botón físico adicional compatible con Tasker, puedes configurarlo para que vibre la hora. Puedes
+  encontrar la acción correspondiente en Tasker en la categoría "Plugin".
 * Decide qué hacer si haces doble clic cuando la pantalla está encendida. Puedes elegir entre una vibración de advertencia y que también se vibre la hora.
 * La aplicación se inicia automáticamente al reiniciar el teléfono.
 

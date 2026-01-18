@@ -123,8 +123,8 @@
     <string name="labelPrivacy1">Програма безоплатна та не містить реклами.</string>
 
     <!-- service -->
-    <string name="serviceNotification">Shortcut: %1$s, Годинник: %2$s</string>
-    <string name="serviceNotificationWatchEnabled">Shortcut: %1$s, Годинник: %2$s (%3$s)</string>
+    <string name="serviceNotification">Швидкий доступ: %1$s, Годинник: %2$s</string>
+    <string name="serviceNotificationWatchEnabled">Швидкий доступ: %1$s, Годинник: %2$s (%3$s)</string>
     <string name="serviceNotificationActionStopWatch">Вимкнути годинник</string>
 
     <!-- standard messages, which are used in more than one component -->

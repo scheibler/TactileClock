@@ -52,8 +52,11 @@ To simplify the recognition of the vibration pattern, there exist three kind of 
 
 * Keep informed about the current time. The app can vibrate the current time automatically every X minutes or every hour.
 * Play the [Greenwich Time Signal](https://en.wikipedia.org/wiki/Greenwich_Time_Signal) at the start of each hour, similar to a radio station.
+* [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm) integration: If your smartphone
+  has an additional hardware button that is supported by Tasker, you can configure it to vibrate the time. You can find
+  the corresponding action in Tasker under the "Plugin" category.
 * Decide what to do if you double-click when the display is on. You can choose between a warning vibration and having
   the time vibrated as well.
-* The app is always ready, even after restarting your phone.
+* The app starts automatically after the system reboots.
 * It runs on all devices with Android version >= 5.1 (API 21).
 

@@ -31,7 +31,7 @@ android {
         resConfigs "en", "de", "es", "uk"
         multiDexEnabled true
         versionCode 15
-        versionName '2.6.0-b1'
+        versionName '2.6.0'
         // project website
         buildConfigField 'String', 'CONTACT_EMAIL_ADDRESS', '"tactile-clock@eric-scheibler.de"'
         buildConfigField 'String', 'PROJECT_WEBSITE', '"https://github.com/scheibler/TactileClock"'
