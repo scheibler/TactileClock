@@ -22,6 +22,7 @@ on. The 0 constitutes an exception with two long vibrations.
 ### Examples:
 
 ```
+00:00 =  --   --
 01:18 =  .    .  -...
 02:51 =  ..    -  .
 10:11 =  .  --    .  .
@@ -60,3 +61,44 @@ To simplify the recognition of the vibration pattern, there exist three kind of 
 * The app starts automatically after the system reboots.
 * It runs on all devices with Android version >= 5.1 (API 21).
 
+## Double-click conflict
+
+TactileClock is triggered by clicking the power button twice in quick succession.
+This may conflict with the 'built-in' double-click action of your Android device.
+For example, a Google Pixel device will typically launch the camera when the
+power button is double-clicked; a Samusung device may take a screenshot when
+the power button is double-clicked.
+
+If your device has a 'built-in' action when the power button is double-clicked,
+there are two options to get TactileClock working.
+
+### Option 1: Disable the 'built-in' double-click action of your device.
+
+  * Google Pixel: (Settings > System > Gestures > Quickly open camera)
+  * Samsung Galaxy: (Settings > Advanced Features > Side Button > Double Press)
+  * Other devices may require different settings to disable the double-click action.
+
+Once the 'built-in' double-click action has been disabled, double-clicking the
+power button will trigger the TactileClock action.
+
+### Option 2: Configure TactileClock to trigger after a long double-click.
+
+This will allow the 'built-in' double-click action to co-exist with the
+TactileClock double-click action.
+
+    1. Open TactileClock
+    2. Swipe left to show the 'Shortcut' screen.
+    3. Modify the 'Click Interval:'.
+         3a. Set 'From:' to be 500ms.
+         3b. Set 'To:' to be 1500ms.
+
+The `From:` and `To:` values specified above should work, but may need to be
+adjusted for optimal results on your device. Once configured, a fast
+double-click will trigger your devices 'built-in' action, while a slow
+double-click will trigger the TactileClock action.
+
+    Power button                              Double-click action
+    ------------------------------------      --------------------------------
+    (click)(click)                            Trigger the 'built-in' action (e.g. open camera).
+
+    (click)(pause-for-one-second)(click)      Trigger the TactileClock action (i.e. vibrate the time).
