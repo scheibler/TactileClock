@@ -7,6 +7,7 @@ The app is available in the [Play Store](https://play.google.com/store/apps/deta
 and at [IzzyOnDroid](https://apt.izzysoft.de/packages/de.eric_scheibler.tactileclock).
 
 
+
 ## How it works
 
 Double-click the power button.  This might take some practice to work reliably. Press slowly and deliberately. If you
@@ -49,28 +50,30 @@ To simplify the recognition of the vibration pattern, there exist three kind of 
 * \[&nbsp;&nbsp;&nbsp;&nbsp;\]: A long gap to split hours and minutes
 
 
+
 ## Additional features
 
 * Keep informed about the current time. The app can vibrate the current time automatically every X minutes or every hour.
 * Play the [Greenwich Time Signal](https://en.wikipedia.org/wiki/Greenwich_Time_Signal) at the start of each hour, similar to a radio station.
-* [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm) integration: If your smartphone
-  has an additional hardware button that is supported by Tasker, you can configure it to vibrate the time. You can find
-  the corresponding action in Tasker under the "Plugin" category.
+* Trigger time vibration with [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm) (see below for details)
 * Decide what to do if you double-click when the display is on. You can choose between a warning vibration and having
   the time vibrated as well.
 * The app starts automatically after the system reboots.
 * It runs on all devices with Android version >= 5.1 (API 21).
+
+
 
 ## Double-click conflict
 
 TactileClock is triggered by clicking the power button twice in quick succession.
 This may conflict with the 'built-in' double-click action of your Android device.
 For example, a Google Pixel device will typically launch the camera when the
-power button is double-clicked; a Samusung device may take a screenshot when
+power button is double-clicked; a Samsung device may take a screenshot when
 the power button is double-clicked.
 
 If your device has a 'built-in' action when the power button is double-clicked,
-there are two options to get TactileClock working.
+there are three options to get TactileClock working.
+
 
 ### Option 1: Disable the 'built-in' double-click action of your device.
 
@@ -80,6 +83,7 @@ there are two options to get TactileClock working.
 
 Once the 'built-in' double-click action has been disabled, double-clicking the
 power button will trigger the TactileClock action.
+
 
 ### Option 2: Configure TactileClock to trigger after a long double-click.
 
@@ -97,8 +101,16 @@ adjusted for optimal results on your device. Once configured, a fast
 double-click will trigger your devices 'built-in' action, while a slow
 double-click will trigger the TactileClock action.
 
-    Power button                              Double-click action
-    ------------------------------------      --------------------------------
-    (click)(click)                            Trigger the 'built-in' action (e.g. open camera).
+| Power button | Double-click action |
+|--------------|---------------------|
+| (click)(click) | Trigger the 'built-in' action (e.g. open camera). |
+| (click)(pause-for-one-second)(click) | Trigger the TactileClock action (i.e. vibrate the time). |
 
-    (click)(pause-for-one-second)(click)      Trigger the TactileClock action (i.e. vibrate the time).
+
+### Option 3: Use Tasker to trigger time vibration with custom events
+
+Use [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm) to trigger time vibration
+from hardware buttons, device shake, NFC tags, or any other event your phone supports.
+
+To set this up, create a new task in the Tasker-app, choose an event and then add TactileClock's vibrate-time action from the "Plugin" category.
+

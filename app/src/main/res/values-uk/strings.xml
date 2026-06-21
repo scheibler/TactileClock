@@ -86,9 +86,11 @@
     <string name="labelAdditionalFeaturesHeading">Додаткові функції</string>
     <string name="labelAdditionalFeaturesDescription1">• Постійне інформування про поточний час. Програма може автоматично повідомляти час кожні X хвилин або щогодини.</string>
     <string name="labelAdditionalFeaturesDescription2">• Відтворення сигналів точного часу на початку кожної години, як в ефірі радіостанцій.</string>
-    <string name="labelAdditionalFeaturesDescription3">• Визначення дій програми, якщо ви двічі натиснете кнопку живлення, коли екран
+    <string name="labelAdditionalFeaturesDescription3">• Використовуйте Tasker для активації вібрації часу:
+        Створіть нове завдання в додатку Tasker, виберіть подію, а потім додайте дію вібрації часу TactileClock з категорії "Plugin".</string>
+    <string name="labelAdditionalFeaturesDescription4">• Визначення дій програми, якщо ви двічі натиснете кнопку живлення, коли екран
         увімкнено. Програма може повідомити про помилку, поінформувати про поточний час або просто ігнорувати подібні випадки.</string>
-    <string name="labelAdditionalFeaturesDescription4">• Програма завжди працює, навіть після перезавантаження телефона.</string>
+    <string name="labelAdditionalFeaturesDescription5">• Програма завжди працює, навіть після перезавантаження телефона.</string>
 
 
     <!-- settings activity -->

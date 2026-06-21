@@ -47,10 +47,55 @@ Weitere Funktionen
 
 * Behalte die aktuelle Uhrzeit im Blick.  Die App kann die aktuelle Uhrzeit automatisch alle X Minuten oder jede Stunde vibrieren.
 * Spiele das [Greenwich Time Signal](https://de.wikipedia.org/wiki/Greenwich_Time_Signal) zu Beginn jeder Stunde ab, ähnlich wie bei einem Radiosender.
-* [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm)-Integration: Wenn dein
-  Smartphone beispielsweise eine zusätzliche Hardware-Taste besitzt, die von Tasker unterstützt wird, kannst du diese so
-  konfigurieren, dass sie die Uhrzeit vibriert. Die zugehörige Aktion findest du in Tasker in der Kategorie "Plugins".
+* Zeitvibration mit [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm) auslösen (siehe unten für Details)
 * Entscheide, was passieren soll, wenn der Bildschirm beim Doppelklick eingeschaltet ist. Du kannst zwischen einer
   Warnvibration und dem Vibrieren der Uhrzeit wählen.
 * Die App startet automatisch nach Dem Neustart des Systems.
+
+
+
+Doppelklick-Konflikt
+
+TactileClock wird durch zweimaliges schnelles Drücken des Power-Buttons ausgelöst.
+Dies kann mit der 'integrierten' Doppelklick-Aktion deines Android-Geräts in Konflikt geraten.
+Beispielsweise öffnet ein Google Pixel-Gerät normalerweise die Kamera, wenn der
+Power-Button doppelt gedrückt wird; ein Samsung-Gerät erstellt hingegen möglicherweise einen Screenshot.
+
+Wenn du auf deinem Gerät bereits eine Aktion beim Doppelklick auf den Power-Button eingerichtet hast, kannst du den
+Konflikt mit einer der folgenden drei Optionen beheben.
+
+
+Option 1: Deaktiviere die 'integrierte' Doppelklick-Aktion deines Geräts.
+
+  * Google Pixel: (Einstellungen > System > Gesten > Kamera schnell öffnen)
+  * Samsung Galaxy: (Einstellungen > Erweiterte Funktionen > Seitentaste > Doppeltes Drücken)
+  * Andere Geräte erfordern möglicherweise andere Einstellungen, um die Doppelklick-Aktion zu deaktivieren.
+
+Sobald die 'integrierte' Doppelklick-Aktion deaktiviert wurde, löst ein Doppelklick auf den
+Power-Button die TactileClock-Aktion aus.
+
+
+Option 2: Konfiguriere TactileClock für einen langen Doppelklick.
+
+Dies ermöglicht das Nebeneinander der 'integrierten' Doppelklick-Aktion und der
+TactileClock-Doppelklick-Aktion.
+
+    1. Öffne TactileClock
+    2. Wische nach links, um den 'Shortcut'-Bildschirm anzuzeigen.
+    3. Ändere das 'Klick-Intervall:'.
+         3a. Setze 'Von:' auf 500ms.
+         3b. Setze 'Bis:' auf 1500ms.
+
+Die oben angegebenen Werte für `Von:` und `Bis:` sollten funktionieren, müssen aber
+möglicherweise für optimale Ergebnisse auf deinem Gerät angepasst werden. Nach der Konfiguration
+löst ein schneller Doppelklick die 'integrierte' Aktion deines Geräts aus, während ein langsamer
+Doppelklick die TactileClock-Aktion auslöst.
+
+
+Option 3: Verwende Tasker, um die Zeitvibration mit benutzerdefinierten Ereignissen auszulösen
+
+Verwende [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm), um die Zeitvibration
+über Hardware-Tasten, Geräteschütteln, NFC-Tags oder andere von deinem Telefon unterstützte Ereignisse auszulösen.
+
+Um dies einzurichten, erstelle eine neue Aufgabe in der Tasker-App, wähle ein Ereignis und füge dann die Zeitvibrations-Aktion von TactileClock aus der "Plugin" Kategorie hinzu.
 

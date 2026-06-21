@@ -86,9 +86,11 @@
     <string name="labelAdditionalFeaturesHeading">Additional features</string>
     <string name="labelAdditionalFeaturesDescription1">• Keep informed about the current time. The app can vibrate the current time automatically every X minutes or every hour.</string>
     <string name="labelAdditionalFeaturesDescription2">• Play the Greenwich Time Signal (a.k.a the pips) at the start of each hour, similar to a radio station.</string>
-    <string name="labelAdditionalFeaturesDescription3">• Decide what to do if you double-click when the display
+    <string name="labelAdditionalFeaturesDescription3">• Use Tasker to trigger the time vibration:
+        Create a new task in the Tasker-app, choose an event and then add TactileClock\'s vibrate-time action from the "Plugin" category.</string>
+    <string name="labelAdditionalFeaturesDescription4">• Decide what to do if you double-click when the display
         is on. You can choose between a warning vibration and having the time vibrated as well.</string>
-    <string name="labelAdditionalFeaturesDescription4">• The app is always ready, even after restarting your phone.</string>
+    <string name="labelAdditionalFeaturesDescription5">• The app is always ready, even after restarting your phone.</string>
 
 
     <!-- settings activity -->

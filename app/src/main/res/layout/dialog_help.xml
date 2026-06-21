@@ -202,5 +202,12 @@
             android:focusable="true"
             android:text="@string/labelAdditionalFeaturesDescription4" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:focusable="true"
+            android:text="@string/labelAdditionalFeaturesDescription5" />
+
     </LinearLayout>
 </ScrollView>

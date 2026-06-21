@@ -46,10 +46,56 @@ Additional features
 
 * Keep informed about the current time. The app can vibrate the current time automatically every X minutes or every hour.
 * Play the [Greenwich Time Signal](https://en.wikipedia.org/wiki/Greenwich_Time_Signal) at the start of each hour, similar to a radio station.
-* [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm) integration: If your smartphone
-  has an additional hardware button that is supported by Tasker, you can configure it to vibrate the time. You can find
-  the corresponding action in Tasker under the "Plugin" category.
+* Trigger time vibration with [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm) (see below for details)
 * Decide what to do if you double-click when the display is on. You can choose between a warning vibration and having
   the time vibrated as well.
 * The app starts automatically after the system reboots.
+
+
+
+Double-click conflict
+
+TactileClock is triggered by clicking the power button twice in quick succession.
+This may conflict with the 'built-in' double-click action of your Android device.
+For example, a Google Pixel device will typically launch the camera when the
+power button is double-clicked; a Samsung device may take a screenshot when
+the power button is double-clicked.
+
+If your device has a 'built-in' action when the power button is double-clicked,
+there are three options to get TactileClock working.
+
+
+Option 1: Disable the 'built-in' double-click action of your device.
+
+  * Google Pixel: (Settings > System > Gestures > Quickly open camera)
+  * Samsung Galaxy: (Settings > Advanced Features > Side Button > Double Press)
+  * Other devices may require different settings to disable the double-click action.
+
+Once the 'built-in' double-click action has been disabled, double-clicking the
+power button will trigger the TactileClock action.
+
+
+Option 2: Configure TactileClock to trigger after a long double-click.
+
+This will allow the 'built-in' double-click action to co-exist with the
+TactileClock double-click action.
+
+    1. Open TactileClock
+    2. Swipe left to show the 'Shortcut' screen.
+    3. Modify the 'Click Interval:'.
+         3a. Set 'From:' to be 500ms.
+         3b. Set 'To:' to be 1500ms.
+
+The `From:` and `To:` values specified above should work, but may need to be
+adjusted for optimal results on your device. Once configured, a fast
+double-click will trigger your devices 'built-in' action, while a slow
+double-click will trigger the TactileClock action.
+
+
+Option 3: Use Tasker to trigger time vibration with custom events
+
+Use [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm) to trigger time vibration
+from hardware buttons, device shake, NFC tags, or any other event your phone supports.
+
+To set this up, create a new task in the Tasker-app, choose an event and then add TactileClock's vibrate-time action from the "Plugin" category.
 

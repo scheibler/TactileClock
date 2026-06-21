@@ -87,9 +87,11 @@
     <string name="labelAdditionalFeaturesHeading">Weitere Funktionen</string>
     <string name="labelAdditionalFeaturesDescription1">• Behalte die aktuelle Uhrzeit im Blick.  Die App kann die aktuelle Uhrzeit automatisch alle X Minuten oder jede Stunde vibrieren.</string>
     <string name="labelAdditionalFeaturesDescription2">• Spiele das Greenwich Time Signal zu Beginn jeder Stunde ab, ähnlich wie bei einem Radiosender.</string>
-    <string name="labelAdditionalFeaturesDescription3">• Entscheide, was passieren soll, wenn der Bildschirm beim Doppelklick eingeschaltet ist. Du kannst zwischen einer
+    <string name="labelAdditionalFeaturesDescription3">• Verwende Tasker, um die Zeitvibration auszulösen:
+        Erstelle eine neue Aufgabe in der Tasker-App, wähle ein Ereignis und füge die Zeitvibrations-Aktion von TactileClock aus der "Plugin" Kategorie hinzu.</string>
+    <string name="labelAdditionalFeaturesDescription4">• Entscheide, was passieren soll, wenn der Bildschirm beim Doppelklick eingeschaltet ist. Du kannst zwischen einer
         Warnvibration und dem Vibrieren der Uhrzeit wählen.</string>
-    <string name="labelAdditionalFeaturesDescription4">• Die App startet automatisch nach Dem Neustart des Systems.</string>
+    <string name="labelAdditionalFeaturesDescription5">• Die App startet automatisch nach Dem Neustart des Systems.</string>
 
     <!-- settings activity -->
     <string name="settingsActivityTitle">Einstellungen</string>

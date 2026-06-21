@@ -90,8 +90,10 @@
     <string name="labelAdditionalFeaturesHeading">Funciones adicionales</string>
     <string name="labelAdditionalFeaturesDescription1">• Mantente informado sobre la hora actual. La aplicación puede vibrar la hora actual automáticamente cada X minutos o cada hora.</string>
     <string name="labelAdditionalFeaturesDescription2">• Reproduce la Señal Horaria de Greenwich (también conocida como \"Pips\") al inicio de cada hora, similar a una estación de radio.</string>
-    <string name="labelAdditionalFeaturesDescription3">• Decide qué hacer si haces doble clic cuando la pantalla está encendida. Puedes elegir entre una vibración de advertencia y que también se vibre la hora.</string>
-    <string name="labelAdditionalFeaturesDescription4">• La aplicación se inicia automáticamente al reiniciar el teléfono.</string>
+    <string name="labelAdditionalFeaturesDescription3">• Usa Tasker para activar la vibración de la hora:
+        Crea una nueva tarea en la aplicación Tasker, selecciona un evento y luego añade la acción de vibración de hora de TactileClock desde la categoría "Plugin".</string>
+    <string name="labelAdditionalFeaturesDescription4">• Decide qué hacer si haces doble clic cuando la pantalla está encendida. Puedes elegir entre una vibración de advertencia y que también se vibre la hora.</string>
+    <string name="labelAdditionalFeaturesDescription5">• La aplicación se inicia automáticamente al reiniciar el teléfono.</string>
 
     <!-- settings activity -->
     <string name="settingsActivityTitle">Ajustes</string>

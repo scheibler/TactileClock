@@ -47,9 +47,55 @@ Funciones adicionales
 
 * Mantente informado sobre la hora actual. La aplicación puede vibrar la hora actual automáticamente cada X minutos o cada hora.
 * Reproduce la [Señal Horaria de Greenwich](https://es.wikipedia.org/wiki/Greenwich_Time_Signal) al inicio de cada hora, similar a una estación de radio.
-* Integración con [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm): Si tu
-  smartphone tiene un botón físico adicional compatible con Tasker, puedes configurarlo para que vibre la hora. Puedes
-  encontrar la acción correspondiente en Tasker en la categoría "Plugin".
+* Activar la vibración de la hora con [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm) (ver detalles abajo)
 * Decide qué hacer si haces doble clic cuando la pantalla está encendida. Puedes elegir entre una vibración de advertencia y que también se vibre la hora.
 * La aplicación se inicia automáticamente al reiniciar el teléfono.
+
+
+
+Conflicto de doble clic
+
+TactileClock se activa presionando dos veces rápidamente el botón de encendido.
+Esto puede entrar en conflicto con la acción 'integrada' de doble clic de tu dispositivo Android.
+Por ejemplo, un dispositivo Google Pixel normalmente abre la cámara cuando se
+presiona dos veces el botón de encendido; un dispositivo Samsung, en cambio, puede crear una captura de pantalla.
+
+Si ya tienes configurada una acción al hacer doble clic en el botón de encendido de tu dispositivo, puedes resolver el
+conflicto con una de las siguientes tres opciones.
+
+
+Opción 1: Desactiva la acción 'integrada' de doble clic de tu dispositivo.
+
+  * Google Pixel: (Ajustes > Sistema > Gestos > Abrir cámara rápidamente)
+  * Samsung Galaxy: (Ajustes > Funciones avanzadas > Botón lateral > Presionar dos veces)
+  * Otros dispositivos pueden requerir ajustes diferentes para desactivar la acción de doble clic.
+
+Una vez desactivada la acción 'integrada' de doble clic, presionar dos veces el
+botón de encendido activará la acción de TactileClock.
+
+
+Opción 2: Configura TactileClock para un doble clic largo.
+
+Esto permite que coexistan la acción 'integrada' de doble clic y la
+acción de doble clic de TactileClock.
+
+    1. Abre TactileClock
+    2. Desliza hacia la izquierda para mostrar la pantalla 'Shortcut'.
+    3. Cambia el 'Intervalo de clic:'.
+         3a. Establece 'Desde:' en 500ms.
+         3b. Establece 'Hasta:' en 1500ms.
+
+Los valores indicados arriba para `Desde:` y `Hasta:` deberían funcionar, pero pueden
+necesitar ajustes para obtener resultados óptimos en tu dispositivo. Después de la configuración,
+un doble clic rápido activará la acción 'integrada' de tu dispositivo, mientras que un doble
+clic lento activará la acción de TactileClock.
+
+
+Opción 3: Usa Tasker para activar la vibración de la hora con eventos personalizados
+
+Usa [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm) para activar la vibración de la hora
+mediante botones de hardware, agitar el dispositivo, etiquetas NFC u otros eventos compatibles con tu teléfono.
+
+Para configurar esto, crea una nueva tarea en la aplicación Tasker, selecciona un evento y luego añade la acción de
+vibración de hora de TactileClock desde la categoría "Plugin".
 
