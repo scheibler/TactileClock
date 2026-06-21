@@ -29,6 +29,7 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.annotation.NonNull;
 import androidx.core.graphics.Insets;
 import androidx.core.view.WindowInsetsControllerCompat;
+import androidx.activity.EdgeToEdge;
 
 
 public abstract class AbstractActivity extends AppCompatActivity implements FragmentResultListener {
@@ -45,6 +46,7 @@ public abstract class AbstractActivity extends AppCompatActivity implements Frag
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(getLayoutResourceId());
         settingsManagerInstance = SettingsManager.getInstance();
         getSupportFragmentManager()

@@ -415,7 +415,8 @@ public class TactileClockService extends Service {
         // launch MainActivity intent
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(
-                this, 0, notificationIntent, getPendingIntentFlags());
+                this, 0, notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         // notification message text
         String notificationMessage;
@@ -453,10 +454,12 @@ public class TactileClockService extends Service {
             disableWatchFromNotificationIntent.setAction(ACTION_DISABLE_WATCH_FROM_NOTIFICATION);
 
             PendingIntent pDeleteIntent = PendingIntent.getService(
-                    this, 0, disableWatchFromNotificationIntent, getPendingIntentFlags());
+                    this, 0, disableWatchFromNotificationIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
             PendingIntent pDisableWatchFromNotificationIntent = PendingIntent.getService(
-                    this, 1, disableWatchFromNotificationIntent, getPendingIntentFlags());
+                    this, 1, disableWatchFromNotificationIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
             notificationBuilder
                 .setDeleteIntent(pDeleteIntent)
@@ -478,13 +481,6 @@ public class TactileClockService extends Service {
         return getResources().getString(R.string.dialogDisabled);
     }
 
-    @SuppressLint("Deprecation, UnspecifiedImmutableFlag")
-    private static int getPendingIntentFlags() {
-        return android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M
-            ? PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-            : PendingIntent.FLAG_UPDATE_CURRENT;
-    }
-
 
     /**
      * is vibration / sound allowed
@@ -493,10 +489,8 @@ public class TactileClockService extends Service {
 
     private boolean isVibrationAllowed() {
         // do not disturb
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (isDoNotDisturbEnabledForMAndNewer(notificationManager)) {
-                return false;
-            }
+        if (isDoNotDisturbEnabled(notificationManager)) {
+            return false;
         }
 
         // active call
@@ -516,10 +510,8 @@ public class TactileClockService extends Service {
 
     private boolean isSoundAllowed() {
         // do not disturb
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (isDoNotDisturbEnabledForMAndNewer(notificationManager)) {
-                return false;
-            }
+        if (isDoNotDisturbEnabled(notificationManager)) {
+            return false;
         }
 
         // active call
@@ -538,8 +530,7 @@ public class TactileClockService extends Service {
         return true;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public static boolean isDoNotDisturbEnabledForMAndNewer(NotificationManager notificationManager) {
+    public static boolean isDoNotDisturbEnabled(NotificationManager notificationManager) {
         return notificationManager.getCurrentInterruptionFilter() != NotificationManager.INTERRUPTION_FILTER_ALL;
     }
 

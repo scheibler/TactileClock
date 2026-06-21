@@ -247,8 +247,7 @@ public class WatchFragment extends Fragment implements IntegerSelector {
             AudioManager audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
             NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                    && TactileClockService.isDoNotDisturbEnabledForMAndNewer(notificationManager)) {
+            if (TactileClockService.isDoNotDisturbEnabled(notificationManager)) {
                 Toast.makeText(
                         getContext(), R.string.warningDndActive, Toast.LENGTH_LONG)
                     .show();

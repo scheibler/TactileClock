@@ -59,7 +59,7 @@ To simplify the recognition of the vibration pattern, there exist three kind of 
 * Decide what to do if you double-click when the display is on. You can choose between a warning vibration and having
   the time vibrated as well.
 * The app starts automatically after the system reboots.
-* It runs on all devices with Android version >= 5.1 (API 21).
+* It runs on all devices with Android version >= 6 (API 23).
 
 
 

@@ -2,6 +2,12 @@
 
 
 
+## v2.6.1: Released at 2026-06-21
+
+- Add support for Android 17 (SDK 37)
+
+
+
 ## v2.6.0: Released at 2026-01-18
 
 - Add Tasker integration

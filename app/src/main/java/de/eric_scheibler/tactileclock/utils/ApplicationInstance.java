@@ -144,13 +144,9 @@ public class ApplicationInstance extends Application {
         PendingIntent pendingIntent = bGTS ? createActionPlayGTSPendingIntent() : createActionVibrateTimeAndSetNextAlarmPendingIntent();
 
         // set alarm
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmManager.setExactAndAllowWhileIdle(
-                    AlarmManager.ELAPSED_REALTIME_WAKEUP, millisSinceDeviceStartup, pendingIntent);
-        } else {
-            alarmManager.setExact(
-                    AlarmManager.ELAPSED_REALTIME_WAKEUP, millisSinceDeviceStartup, pendingIntent);
-        }
+        alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.ELAPSED_REALTIME_WAKEUP, millisSinceDeviceStartup, pendingIntent);
+
         return true;
     }
 
@@ -174,7 +170,7 @@ public class ApplicationInstance extends Application {
                 this,
                 PENDING_INTENT_VIBRATE_TIME_ID,
                 intent,
-                getPendingIntentFlags());
+                PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }
 
     private PendingIntent createActionPlayGTSPendingIntent() {
@@ -185,14 +181,7 @@ public class ApplicationInstance extends Application {
                 this,
                 PENDING_INTENT_VIBRATE_TIME_ID,
                 intent,
-                getPendingIntentFlags());
-    }
-
-    @SuppressLint("Deprecation, UnspecifiedImmutableFlag")
-    private static int getPendingIntentFlags() {
-        return android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M
-            ? PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE
-            : PendingIntent.FLAG_CANCEL_CURRENT;
+                PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }
 
 

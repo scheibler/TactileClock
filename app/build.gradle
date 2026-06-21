@@ -1,6 +1,5 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
 }
 
 // get signing properties
@@ -22,21 +21,19 @@ if (keystoreProperties.isEmpty()) {
 }
 
 android {
-    compileSdkVersion 36
+    compileSdkVersion 37
     namespace "de.eric_scheibler.tactileclock"
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 36
+        minSdkVersion 23
+        targetSdkVersion 37
         resConfigs "en", "de", "es", "uk"
         multiDexEnabled true
-        versionCode 15
-        versionName '2.6.0'
+        versionCode 16
+        versionName '2.6.1'
         // project website
         buildConfigField 'String', 'CONTACT_EMAIL_ADDRESS', '"tactile-clock@eric-scheibler.de"'
         buildConfigField 'String', 'PROJECT_WEBSITE', '"https://github.com/scheibler/TactileClock"'
-        // set .apk name
-        setProperty("archivesBaseName", "${archivesBaseName}-$versionName")
     }
 
     signingConfigs {
@@ -65,8 +62,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
+    kotlin {
+        compilerOptions {
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        }
     }
 
     dependenciesInfo {
@@ -75,7 +74,6 @@ android {
     }
 
     lintOptions {
-        //disable "GoogleAppIndexingWarning", "Autofill", "IconLauncherShape", "ButtonStyle"
         disable "InflateParams", "GoogleAppIndexingWarning"
         enable "NewerVersionAvailable"
         abortOnError true
@@ -85,17 +83,17 @@ android {
 dependencies {
     // android x
     implementation 'androidx.appcompat:appcompat:1.7.1'
-    implementation 'androidx.core:core:1.17.0'
+    implementation 'androidx.core:core:1.19.0'
     implementation 'androidx.drawerlayout:drawerlayout:1.2.0'
     implementation 'androidx.fragment:fragment:1.8.9'
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
 
     // material design
-    implementation 'com.google.android.material:material:1.13.0'
+    implementation 'com.google.android.material:material:1.14.0'
 
     // google helpers
-    implementation 'com.google.guava:guava:33.5.0-android'
-    implementation 'com.google.code.gson:gson:2.13.2'
+    implementation 'com.google.guava:guava:33.6.0-android'
+    implementation 'com.google.code.gson:gson:2.14.0'
 
     // logging
     implementation 'com.jakewharton.timber:timber:5.0.1'
@@ -109,4 +107,57 @@ ext {
     mainActivityClass = 'de.eric_scheibler.tactileclock.ui.activity.MainActivity'
 }
 apply from: 'gradle-scripts/openApkTask.gradle'
+
+// rename output files
+//
+// Common function for output file name creation
+ext.buildOutputFileName = { variantName, versionName, extension ->
+    def parts = [project.name]
+
+    // Extract flavor and build type from variant name
+    def buildType = ""
+    def flavorName = ""
+    android.buildTypes.names.each { bt ->
+        if (variantName.toLowerCase().endsWith(bt.toLowerCase())) {
+            buildType = bt
+            flavorName = variantName.substring(0, variantName.length() - bt.length())
+        }
+    }
+
+    if (!flavorName.isEmpty()) {
+        parts.add(flavorName)
+    }
+    parts.add(versionName)
+    parts.add(buildType)
+
+    return "${parts.join('-')}.${extension}"
+}
+
+// Rename APKs
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        variant.outputs.each { output ->
+            def versionName = output.versionName.get()
+            output.outputFileName.set(buildOutputFileName(variant.name, versionName, "apk"))
+        }
+    }
+}
+
+// Rename Bundles
+afterEvaluate {
+    tasks.matching { it.name.startsWith("bundle") }.configureEach { bundleTask ->
+        bundleTask.doLast {
+            def variantName = bundleTask.name.replace("bundle", "").uncapitalize()
+            def versionName = android.defaultConfig.versionName
+            def outputDir = file("${layout.buildDirectory.get()}/outputs/bundle/${variantName}")
+
+            outputDir.listFiles()?.each { file ->
+                if (file.name.endsWith(".aab")) {
+                    def newName = buildOutputFileName(variantName, versionName, "aab")
+                    file.renameTo(new File(outputDir, newName))
+                }
+            }
+        }
+    }
+}
 
