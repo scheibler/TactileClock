@@ -16,6 +16,7 @@ on. The 0 constitutes an exception with two long vibrations.
 
 Examples:
 
+* 00:00 =  --   --
 * 01:18 =  .    .  -...
 * 02:51 =  ..    -  .
 * 10:11 =  .  --    .  .

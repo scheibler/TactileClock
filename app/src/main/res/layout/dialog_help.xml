@@ -91,6 +91,13 @@
             android:fontFamily="serif-monospace"
             android:text="@string/labelTimeFormatExample4" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:fontFamily="serif-monospace"
+            android:text="@string/labelTimeFormatExample5" />
+
 
         <!-- time format explanation -->
 

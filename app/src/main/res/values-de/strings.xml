@@ -71,10 +71,11 @@
         durch zwei aufeinander folgende kurze Vibrationen, die 6 durch eine lange und eine kurze Vibration
         dargestellt usw.. Die 0 bildet mit zwei langen Vibrationen eine Ausnahme.</string>
     <string name="labelTimeFormatExampleHeading">Beispiele:</string>
-    <string name="labelTimeFormatExample1">• 01:18 =  . &#160; .  -...</string>
-    <string name="labelTimeFormatExample2">• 02:51 =  .. &#160; -  .</string>
-    <string name="labelTimeFormatExample3">• 10:11 =  .  -- &#160; .  .</string>
-    <string name="labelTimeFormatExample4">• 19:06 =  .  -.... &#160; -.</string>
+    <string name="labelTimeFormatExample1">• 00:00 =  -- &#160; --</string>
+    <string name="labelTimeFormatExample2">• 01:18 =  . &#160; .  -...</string>
+    <string name="labelTimeFormatExample3">• 02:51 =  .. &#160; -  .</string>
+    <string name="labelTimeFormatExample4">• 10:11 =  .  -- &#160; .  .</string>
+    <string name="labelTimeFormatExample5">• 19:06 =  .  -.... &#160; -.</string>
     <string name="labelTimeFormatExplanationHeading">Erklärung:</string>
     <string name="labelTimeFormatExplanation1">Die Uhrzeit wird Ziffer für Ziffer verarbeitet.</string>
     <string name="labelTimeFormatExplanation2">Der . steht für eine kurze und der - für eine lange Vibration.</string>

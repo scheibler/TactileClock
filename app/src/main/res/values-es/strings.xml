@@ -71,10 +71,11 @@
         representa el dígito 5. De esta forma, el dígito 2 se representa mediante dos vibraciones cortas consecutivas, el 6 mediante
         una vibración larga y una corta, etc. El 0 se representa mediante dos vibraciones largas.</string>
     <string name="labelTimeFormatExampleHeading">Ejemplos:</string>
-    <string name="labelTimeFormatExample1">• 01:18 =  . &#160; .  -...</string>
-    <string name="labelTimeFormatExample2">• 02:51 =  .. &#160; -  .</string>
-    <string name="labelTimeFormatExample3">• 10:11 =  .  -- &#160; .  .</string>
-    <string name="labelTimeFormatExample4">• 19:06 =  .  -.... &#160; -.</string>
+    <string name="labelTimeFormatExample1">• 00:00 =  -- &#160; --</string>
+    <string name="labelTimeFormatExample2">• 01:18 =  . &#160; .  -...</string>
+    <string name="labelTimeFormatExample3">• 02:51 =  .. &#160; -  .</string>
+    <string name="labelTimeFormatExample4">• 10:11 =  .  -- &#160; .  .</string>
+    <string name="labelTimeFormatExample5">• 19:06 =  .  -.... &#160; -.</string>
     <string name="labelTimeFormatExplanationHeading">Explicación:</string>
     <string name="labelTimeFormatExplanation1">La hora se procesa dígito a dígito.</string>
     <string name="labelTimeFormatExplanation2">El . representa una vibración corta y el - una vibración larga.</string>

@@ -69,10 +69,11 @@
         представляється двома послідовними короткими вібраціями, 6 — послідовністю однієї довгої та однієї короткої вібрацій і так
         далі. 0 є виключенням з цього правила і представляється двома довгими вібраціями.</string>
     <string name="labelTimeFormatExampleHeading">Приклади:</string>
-    <string name="labelTimeFormatExample1">• 01:18 =  . &#160; .  -...</string>
-    <string name="labelTimeFormatExample2">• 02:51 =  .. &#160; -  .</string>
-    <string name="labelTimeFormatExample3">• 10:11 =  .  -- &#160; .  .</string>
-    <string name="labelTimeFormatExample4">• 19:06 =  .  -.... &#160; -.</string>
+    <string name="labelTimeFormatExample1">• 00:00 =  -- &#160; --</string>
+    <string name="labelTimeFormatExample2">• 01:18 =  . &#160; .  -...</string>
+    <string name="labelTimeFormatExample3">• 02:51 =  .. &#160; -  .</string>
+    <string name="labelTimeFormatExample4">• 10:11 =  .  -- &#160; .  .</string>
+    <string name="labelTimeFormatExample5">• 19:06 =  .  -.... &#160; -.</string>
     <string name="labelTimeFormatExplanationHeading">Пояснення:</string>
     <string name="labelTimeFormatExplanation1">Значення поточного часу обробляється цифра за цифрою.</string>
     <string name="labelTimeFormatExplanation2">Крапка у прикладах означає коротку, а тире — довгу вібрацію.</string>

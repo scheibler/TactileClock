@@ -17,6 +17,7 @@ dargestellt usw.. Die 0 bildet mit zwei langen Vibrationen eine Ausnahme.
 
 Beispiele:
 
+* 00:00 =  --   --
 * 01:18 =  .    .  -...
 * 02:51 =  ..    -  .
 * 10:11 =  .  --    .  .

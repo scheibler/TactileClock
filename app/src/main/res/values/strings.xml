@@ -69,10 +69,11 @@
         is represented by two consecutive short vibrations, the 6 by a long and a short one and so
         on. The 0 constitutes an exception with two long vibrations.</string>
     <string name="labelTimeFormatExampleHeading">Examples:</string>
-    <string name="labelTimeFormatExample1">• 01:18 =  . &#160; .  -...</string>
-    <string name="labelTimeFormatExample2">• 02:51 =  .. &#160; -  .</string>
-    <string name="labelTimeFormatExample3">• 10:11 =  .  -- &#160; .  .</string>
-    <string name="labelTimeFormatExample4">• 19:06 =  .  -.... &#160; -.</string>
+    <string name="labelTimeFormatExample1">• 00:00 =  -- &#160; --</string>
+    <string name="labelTimeFormatExample2">• 01:18 =  . &#160; .  -...</string>
+    <string name="labelTimeFormatExample3">• 02:51 =  .. &#160; -  .</string>
+    <string name="labelTimeFormatExample4">• 10:11 =  .  -- &#160; .  .</string>
+    <string name="labelTimeFormatExample5">• 19:06 =  .  -.... &#160; -.</string>
     <string name="labelTimeFormatExplanationHeading">Explanation:</string>
     <string name="labelTimeFormatExplanation1">The time is processed digit by digit.</string>
     <string name="labelTimeFormatExplanation2">The . stands for a short and the - for a long vibration.</string>

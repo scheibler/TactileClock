@@ -2,6 +2,12 @@
 
 
 
+## v2.6.2: Released at 2026-06-23
+
+- Rebuild .apk because reproducible build failed for version 2.6.1 on f-droid
+
+
+
 ## v2.6.1: Released at 2026-06-21
 
 - Add support for Android 17 (SDK 37)
